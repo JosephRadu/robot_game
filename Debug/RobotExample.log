@@ -1,0 +1,11 @@
+﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (RobotExample.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  winmain.cpp
+d:\users\joseph\downloads\robot_game\robot_game\winmain.cpp(169): warning C4065: switch statement contains 'default' but no 'case' labels
+  V3D.cpp
+  Robot.cpp
+d:\users\joseph\downloads\robot_game\robot_game\robot.cpp(243): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  CGfxOpenGL.cpp
+  Generating Code...
+CGfxOpenGL.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/SAFESEH' specification
+  RobotExample.vcxproj -> D:\Users\Joseph\Downloads\robot_game\robot_game\Debug\robot_game.exe
+  RobotExample.vcxproj -> Debug\RobotExample.pdb (Full PDB)
