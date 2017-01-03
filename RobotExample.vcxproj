@@ -45,6 +45,8 @@
     <OutDir>Debug\</OutDir>
     <IntDir>Debug\</IntDir>
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>./include;$(IncludePath)</IncludePath>
+    <SourcePath>./src;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>Release\</OutDir>
@@ -90,20 +92,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CGfxOpenGL.cpp" />
-    <ClCompile Include="Robot.cpp" />
-    <ClCompile Include="V3D.cpp" />
-    <ClCompile Include="winmain.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="CGfxOpenGL.h" />
-    <ClInclude Include="resource.h" />
-    <ClInclude Include="Robot.h" />
-    <ClInclude Include="timer.h" />
-    <ClInclude Include="V3D.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ResourceCompile Include="RobotExample.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\CGfxOpenGL.cpp" />
+    <ClCompile Include="src\drawable.cpp" />
+    <ClCompile Include="src\entity.cpp" />
+    <ClCompile Include="src\Robot.cpp" />
+    <ClCompile Include="src\V3D.cpp" />
+    <ClCompile Include="src\winmain.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\CGfxOpenGL.h" />
+    <ClInclude Include="include\drawable.h" />
+    <ClInclude Include="include\entity.h" />
+    <ClInclude Include="include\resource.h" />
+    <ClInclude Include="include\Robot.h" />
+    <ClInclude Include="include\timer.h" />
+    <ClInclude Include="include\V3D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

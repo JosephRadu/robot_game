@@ -1,11 +1,15 @@
 ﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (RobotExample.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  winmain.cpp
-d:\users\joseph\downloads\robot_game\robot_game\winmain.cpp(169): warning C4065: switch statement contains 'default' but no 'case' labels
-  V3D.cpp
-  Robot.cpp
-d:\users\joseph\downloads\robot_game\robot_game\robot.cpp(243): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
   CGfxOpenGL.cpp
-  Generating Code...
-CGfxOpenGL.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/SAFESEH' specification
-  RobotExample.vcxproj -> D:\Users\Joseph\Downloads\robot_game\robot_game\Debug\robot_game.exe
+d:\users\joseph\documents\visual studio 2015\projects\robot_game\robot_game\src\cgfxopengl.cpp(106): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+d:\users\joseph\documents\visual studio 2015\projects\robot_game\robot_game\src\cgfxopengl.cpp(124): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+d:\users\joseph\documents\visual studio 2015\projects\robot_game\robot_game\src\cgfxopengl.cpp(124): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
+d:\users\joseph\documents\visual studio 2015\projects\robot_game\robot_game\src\cgfxopengl.cpp(133): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+d:\users\joseph\documents\visual studio 2015\projects\robot_game\robot_game\src\cgfxopengl.cpp(133): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
+d:\users\joseph\documents\visual studio 2015\projects\robot_game\robot_game\src\cgfxopengl.cpp(327): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+d:\users\joseph\documents\visual studio 2015\projects\robot_game\robot_game\src\cgfxopengl.cpp(328): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+d:\users\joseph\documents\visual studio 2015\projects\robot_game\robot_game\src\cgfxopengl.cpp(329): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+d:\users\joseph\documents\visual studio 2015\projects\robot_game\robot_game\src\cgfxopengl.cpp(334): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+d:\users\joseph\documents\visual studio 2015\projects\robot_game\robot_game\src\cgfxopengl.cpp(335): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+d:\users\joseph\documents\visual studio 2015\projects\robot_game\robot_game\src\cgfxopengl.cpp(336): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+  RobotExample.vcxproj -> D:\Users\Joseph\Documents\Visual Studio 2015\Projects\robot_game\robot_game\Debug\robot_game.exe
   RobotExample.vcxproj -> Debug\RobotExample.pdb (Full PDB)
