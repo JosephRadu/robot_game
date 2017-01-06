@@ -33,4 +33,5 @@ public:
 	V3D& Scale();
 
 	void Draw();
+	void Update();
 };

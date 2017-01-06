@@ -1,8 +1,9 @@
 #ifndef __ROBOT_H
 #define __ROBOT_H
 
-#include "V3D.h"
+
 #include <math.h>
+#include "entity.h"
 
 // constants for arm and leg movement states
 const char BACKWARD_STATE = 0;
@@ -18,13 +19,11 @@ const char MOVEMENT_STATIC = 2;
 const char LEFT = 0;
 const char RIGHT = 1;
 
-class Robot
+class Robot : public Entity
 {
 private:
 	char legStates[2];
 	char armStates[2];
-
-	V3D v3dPosition;
 
 	char movementState;
 
@@ -68,10 +67,9 @@ public:
 	// updates the robot data
 	void AnimationPrepare(float dt);
 
+	void Update();
 
 	void Move(int i);
-
-	V3D position();
 
 };
 

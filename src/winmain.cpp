@@ -87,6 +87,19 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 		case ID_MENU_LOL:
 			g_glRender->TogglePause();
 			break;
+			
+		case ID_CAMERA_OVERVIEW:
+			g_glRender->SwitchToCamera(C_OVERVIEW);
+			break;
+
+		case ID_CAMERA_ROBOTBEHIND:
+			g_glRender->SwitchToCamera(C_ROBOT_BEHIND);
+			break;
+
+		case ID_CAMERA_ROBOTFRONT:
+			g_glRender->SwitchToCamera(C_ROBOT_FRONT);
+			break;
+
 		default:
 			break;
 		}

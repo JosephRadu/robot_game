@@ -24,7 +24,7 @@ Robot::Robot()
 
 	bInitialMovement = false;
 
-	v3dPosition.set(0, 0, -30);
+	v3dPosition.set(0, 0, 0);
 
 	fAngle = 0;
 
@@ -243,13 +243,7 @@ void Robot::AnimationPrepare(float dt)
 void Robot::Move(int i)
 {
 	if (i == 1) {
-
-		float angle = fAngle;
-
-		float x = sin(PI * angle / 180) * 1;
-		float z = cos(PI * angle / 180) * 1;
-
-		v3dPosition.set(v3dPosition.x() + x, v3dPosition.y(), v3dPosition.z() + z);
+		v3dPosition.set(v3dPosition.x() + v3dDirection.x(), v3dPosition.y(), v3dPosition.z() + v3dDirection.z());
 	}
 }
 
@@ -294,6 +288,11 @@ void Robot::AnimationMove(int i) {
 }
 
 
+void Robot::Update()
+{
+
+}
+
 float Robot::angle()
 {
 	return fAngle;
@@ -314,9 +313,6 @@ void Robot::rotate(float f)
 	if (fAngle >= 360.0f)
 		fAngle = 0.0f;
 
-}
-
-V3D Robot::position()
-{
-	return v3dPosition;
+	v3dDirection.setX(sin(PI * fAngle / 180) * 1);
+	v3dDirection.setZ(cos(PI * fAngle / 180) * 1);
 }

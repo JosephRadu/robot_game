@@ -95,6 +95,7 @@
     <ResourceCompile Include="RobotExample.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\camera.cpp" />
     <ClCompile Include="src\CGfxOpenGL.cpp" />
     <ClCompile Include="src\drawable.cpp" />
     <ClCompile Include="src\entity.cpp" />
@@ -103,13 +104,14 @@
     <ClCompile Include="src\winmain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\camera.h" />
     <ClInclude Include="include\CGfxOpenGL.h" />
     <ClInclude Include="include\drawable.h" />
     <ClInclude Include="include\entity.h" />
-    <ClInclude Include="include\resource.h" />
     <ClInclude Include="include\Robot.h" />
     <ClInclude Include="include\timer.h" />
     <ClInclude Include="include\V3D.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

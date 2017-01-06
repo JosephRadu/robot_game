@@ -17,6 +17,11 @@ V3D& Entity::Rotation()
 	return v3dRotation;
 }
 
+V3D& Entity::Direction()
+{
+	return v3dDirection;
+}
+
 void Entity::AddAngle(int i)
 {
 	iAngle += i;

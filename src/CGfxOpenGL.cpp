@@ -27,11 +27,10 @@ bool CGfxOpenGL::Init()
 
 	bPaused = false;
 
-	
 	cube.Init_Plane();
-	cube.Position().setZ(-20);
+	cube.Position().setZ(0);
 	cube.Position().setX(0);
-	cube.Position().setY(-20);
+	cube.Position().setY(-12);
 	cube.Rotation().setY(1);
 	//cube.SetAngle(45);
 	cube.Scale().setX(100);
@@ -39,11 +38,25 @@ bool CGfxOpenGL::Init()
 	cube.Scale().setZ(100);
 
 	//OBJRead("teapot.obj");
+	iCameraSelected = C_ROBOT_BEHIND;
 
-	camera.SetAngle(0);
-	camera.Position().set(0, 0, 0);
-	
+	camera[0].Position().set(0, 20, 0);
+	camera[0].Direction().set(-0.67, -1, -0.75);
+	camera[0].Rotation().set(-4, -4, 0);
 
+	camera[1].Direction().set(0, 0, 1);
+	camera[1].Position().set(-20, 0, -30);
+
+	camera[2].Direction().set(0, 0, 1);
+	camera[2].Position().set(20, 0, 30);
+
+	theRobot->Direction().set(0, 0, 0);
+	theRobot->Rotation().set(0, 0 , 0);
+	theRobot->Position().set(-20, 0, -20);
+
+	//camera.SetAngle(0);
+	//camera.Position().set(0, 0, -10);
+	UpdateCamera();
 	return true;
 }
 
@@ -217,8 +230,6 @@ void CGfxOpenGL::UpdateCamera()
 		m_windowHeight = 1;
 	}
 
-
-
 	glViewport(0, 0, m_windowWidth, m_windowHeight);	// reset the viewport to new dimensions
 	glMatrixMode(GL_PROJECTION);			// set projection matrix current matrix
 	glLoadIdentity();						// reset projection matrix
@@ -226,27 +237,14 @@ void CGfxOpenGL::UpdateCamera()
 	// calculate aspect ratio of window
 	gluPerspective(90.0f, (GLfloat)m_windowWidth / (GLfloat)m_windowHeight, 1.0f, 1000.0f);
 
-	//glTranslatef(camera.Position().x(), camera.Position().y(), camera.Position().z());
 
-	//glRotatef(camera.Angle(), camera.Rotation().x(), camera.Rotation().y(), camera.Rotation().z());	// rotate the drawable on its y-axis
+	V3D v3dCP(camera[iCameraSelected].Position());
+	V3D v3dCD(camera[iCameraSelected].Direction());
 
-	//float angle = camera.Angle();
-
-	//float x = sin(PI * angle) * 1;
-	//float z = cos(PI * angle) * 1;
-
-	//camera.Position().set(camera.Position().x() + x, camera.Position().y(), camera.Position().z() + z);
-
-	gluLookAt(x, y, z,
-		x + lx, y + ly, z + lz,
+	gluLookAt(
+		v3dCP.x(), v3dCP.y(), v3dCP.z(),
+		v3dCP.x() + v3dCD.x(), v3dCP.y() + v3dCD.y(), v3dCP.z() + v3dCD.z(),
 		0.0f, 1.0f, 0.0f);
-
-	/*
-	gluLookAt(camera.Position().x(), camera.Position().y(), camera.Position().z(),
-		camera.Position().x() + x, camera.Position().y(), camera.Position().z() + z,
-		0, -1, 0);
-		*/
-		
 	
 
 	glMatrixMode(GL_MODELVIEW);				// set modelview matrix
@@ -278,8 +276,46 @@ void CGfxOpenGL::input(char s) {
 		return;
 	}
 
-	theRobot->AnimationMove(0);
-	UpdateCamera();
+	/*
+	if (iCameraSelected == C_ROBOT_BEHIND || iCameraSelected == C_ROBOT_FRONT)
+	{
+		if (s == 38 || s == 37 || s == 39 || s == 40 || s == 84 || s == 71) {
+			camera[iCameraSelected].Move(s);
+		}
+	}
+	*/
+
+	if (iCameraSelected == C_ROBOT_BEHIND) {
+		camera[iCameraSelected].Direction().set(theRobot->Direction());
+		camera[iCameraSelected].Position().set(
+			theRobot->Position().x() - (theRobot->Direction().x() * 10),
+			theRobot->Position().y() - (theRobot->Direction().y() * 10),
+			theRobot->Position().z() - (theRobot->Direction().z() * 10)
+		);
+	}
+
+	if (iCameraSelected == C_ROBOT_FRONT) {
+		camera[iCameraSelected].Direction().set(theRobot->Direction());
+		camera[iCameraSelected].Position().set(
+			theRobot->Position().x() + (theRobot->Direction().x() * 10),
+			theRobot->Position().y() + (theRobot->Direction().y() * 10),
+			theRobot->Position().z() + (theRobot->Direction().z() * 10)
+		);
+	}
+
+
+
+
+
+
+	if (s != 87)
+	{
+		theRobot->AnimationMove(0);
+		//theRobot->Move(0);
+	}
+
+
+
 	switch (s)
 	{
 	// A
@@ -299,46 +335,11 @@ void CGfxOpenGL::input(char s) {
 	case 83:
 		theRobot->Move(0);
 		break;
-	// Camera look up
-	case 38:
-		angle += 0.04f;
-		ly = tan(angle);
-
-		break;
-	// Camera look left
-	case 37:
-		angle -= 0.08f;
-		lx = sin(angle);
-		lz = -cos(angle);
-		break;
-	// Camera look right
-	case 39:
-		angle += 0.08f;
-		lx = sin(angle);
-		lz = -cos(angle);
-		break;
-	// Camera look down
-	case 40:
-		angle -= 0.04f;
-		ly = tan(angle);
-		break;
-	// Camera forward
-	case 84:
-		x += lx * 1.2;
-		y += ly * 1.2;
-		z += lz * 1.2;
-		break;
-
-	// Camera backwards
-	case 71:
-		x -= lx * 1.2;
-		y -= ly * 1.2;
-		z -= lz * 1.2;
-		break;
-
 	default:
 		break;
 	}
+
+	UpdateCamera();
 
 }
 
@@ -349,4 +350,11 @@ void CGfxOpenGL::TogglePause() {
 	else {
 		bPaused = true;
 	}
+}
+
+void CGfxOpenGL::SwitchToCamera(int i)
+{
+	iCameraSelected = i;
+	input('0');
+	UpdateCamera();
 }

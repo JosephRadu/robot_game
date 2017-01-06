@@ -80,3 +80,8 @@ V3D& Drawable::Scale()
 {
 	return scale;
 }
+
+void Drawable::Update()
+{
+
+}
