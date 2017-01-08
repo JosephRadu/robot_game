@@ -1,3 +1,10 @@
+/**
+* @Author	Joseph Radu
+* @date		6th January 2017
+* @brief	Cameras!
+*
+*/
+
 #include "camera.h"
 
 Camera::Camera(){
