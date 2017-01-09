@@ -8,8 +8,6 @@
 #include "CGfxOpenGL.h"
 #include "timer.h"
 
-#include "resource.h"
-
 bool exiting = false;
 long windowWidth = 1024;
 long windowHeight = 768;
@@ -17,7 +15,7 @@ long windowBits = 32;
 bool fullscreen = false;
 HDC hDC; 
 
-CGfxOpenGL *g_glRender = NULL;
+Application *_application = NULL;
 CHiResTimer *g_hiResTimer = NULL;
 
 void SetupPixelFormat(HDC hDC)
@@ -61,16 +59,16 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 
 	// dispatch messages
 	switch (uMsg)
-	{	
+	{
 	case WM_CREATE:			// window creation
 		hDC = GetDC(hWnd);
-		SetupPixelFormat(hDC);
+		//SetupPixelFormat(hDC);
 		//SetupPalette();
 		hRC = wglCreateContext(hDC);
 		wglMakeCurrent(hDC, hRC);
 		break;
 
-	
+
 	case WM_DESTROY:			// window destroy
 		break;
 	case WM_QUIT:
@@ -85,19 +83,19 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 		switch (fwKeys)
 		{
 		case ID_MENU_LOL:
-			g_glRender->TogglePause();
+			TogglePause();
 			break;
-			
+
 		case ID_CAMERA_OVERVIEW:
-			g_glRender->SwitchToCamera(C_OVERVIEW);
+			SwitchToCamera(C_OVERVIEW);
 			break;
 
 		case ID_CAMERA_ROBOTBEHIND:
-			g_glRender->SwitchToCamera(C_ROBOT_BEHIND);
+			SwitchToCamera(C_ROBOT_BEHIND);
 			break;
 
 		case ID_CAMERA_ROBOTFRONT:
-			g_glRender->SwitchToCamera(C_ROBOT_FRONT);
+			SwitchToCamera(C_ROBOT_FRONT);
 			break;
 
 		default:
@@ -111,7 +109,7 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 
 	case WM_CLOSE:					// windows is closing
 
-		// deselect rendering context and delete it
+									// deselect rendering context and delete it
 		wglMakeCurrent(hDC, NULL);
 		wglDeleteContext(hRC);
 
@@ -123,7 +121,7 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 		height = HIWORD(lParam);		// retrieve width and height
 		width = LOWORD(lParam);
 
-		g_glRender->SetupProjection(width, height);
+		SetupProjection(width, height);
 
 		break;
 
@@ -152,14 +150,14 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 		break;
 
 	case WM_KEYUP:
-		g_glRender->input('0');
+		input('0');
 		break;
 
 	case WM_KEYDOWN:
 		fwKeys = (int)wParam;    // virtual-key code 
 		keyData = lParam;          // key data 
 
-		g_glRender->input((char)wParam);
+		input((char)wParam);
 
 		switch (fwKeys)
 		{
@@ -175,6 +173,7 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 	default:
 		break;
 	}
+
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);
 }
 
@@ -185,7 +184,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	MSG		   msg;				// message
 	RECT	   windowRect;
 
-	g_glRender = new CGfxOpenGL;
+	_application = new Application;
 	g_hiResTimer = new CHiResTimer;
 
 	windowRect.left=(long)0;						// Set Left Value To 0
@@ -235,13 +234,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	ShowWindow(hwnd, SW_SHOW);			// display the window
 	UpdateWindow(hwnd);					// update the window
 
-	g_glRender->Init();
+	_application->Init();
 	g_hiResTimer->Init();
 
 	while (!exiting)
 	{
-		g_glRender->Prepare(g_hiResTimer->GetElapsedSeconds(1));
-		g_glRender->Render();
+		_application->Update(g_hiResTimer->GetElapsedSeconds(1));
 		SwapBuffers(hDC);
 
 		while (PeekMessage (&msg, NULL, 0, 0, PM_NOREMOVE))
@@ -257,7 +255,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		}
 	}
 
-	delete g_glRender;
+	delete _application;
 
 	return (int)msg.wParam;
 }
