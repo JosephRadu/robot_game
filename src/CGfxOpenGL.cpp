@@ -3,7 +3,6 @@
 #endif
 #include "CGfxOpenGL.h"
 
-
 // disable implicit float-double casting
 #pragma warning(disable:4305)
 
@@ -28,10 +27,9 @@ void Application::Update(float dt)
 	manager_app_state.Update(dt);
 }
 
-
-void Application::WindowProc(WPARAM& wParam, LPARAM& lParam)
+void Application::WindowProc(int iWindowProc, WPARAM& wParam, LPARAM& lParam)
 {
-	manager_app_state.WindowProc(wParam, lParam);
+	manager_app_state.WindowProc(iWindowProc, wParam, lParam);
 }
 
 Manager_App_State&  Application::GetStateManager()

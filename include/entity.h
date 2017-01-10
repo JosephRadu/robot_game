@@ -15,6 +15,7 @@ protected:
 	V3D v3dPosition;
 	V3D v3dRotation;
 	V3D v3dDirection;
+	float fTimeScale;
 	int iAngle;
 public:
 
@@ -53,6 +54,20 @@ public:
 	\ return int
 	*/
 	int Angle();
+
+
+	/*!
+	\ brief Set the timescale
+	\ param float
+	*/
+	void SetTimeScale(float dt);
+
+	/*!
+	\ brief Return the timescale
+	\ return float
+	*/
+	float TimeScale ();
+
 
 	/*!
 	\brief Update the entity.

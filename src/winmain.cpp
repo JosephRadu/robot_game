@@ -4,7 +4,6 @@
 #include <windows.h>
 #include <gl/gl.h>
 #include <gl/glu.h>
-
 #include "CGfxOpenGL.h"
 #include "timer.h"
 
@@ -49,27 +48,6 @@ void SetupPixelFormat(HDC hDC)
 	SetPixelFormat(hDC, pixelFormat, &pfd);
 }
 
-
-void SetupProjection(int width, int height)
-{
-	if (height == 0)					// don't want a divide by zero
-	{
-		height = 1;
-	}
-
-	glViewport(0, 0, width, height);		// reset the viewport to new dimensions
-	glMatrixMode(GL_PROJECTION);			// set projection matrix current matrix
-	glLoadIdentity();						// reset projection matrix
-											// calculate aspect ratio of window
-	gluPerspective(90.0f, (GLfloat)width / (GLfloat)height, 1.0f, 1000.0f);
-
-	glMatrixMode(GL_MODELVIEW);				// set modelview matrix
-	glLoadIdentity();						// reset modelview matrix
-
-	//m_windowWidth = width;
-	//m_windowHeight = height;
-}
-
 LRESULT CALLBACK MainWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	static HDC hDC;
@@ -81,7 +59,7 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 	// dispatch messages
 	switch (uMsg)
 	{
-	case WM_CREATE:			// window creation
+	case WM_CREATE:		// window creation
 		hDC = GetDC(hWnd);
 		SetupPixelFormat(hDC);
 		//SetupPalette();
@@ -90,40 +68,17 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 		break;
 
 
-	case WM_DESTROY:			// window destroy
+	case WM_DESTROY:	// window destroy
 		break;
 	case WM_QUIT:
 		break;
 	case WM_COMMAND:
-		fwKeys = (int)wParam;    // virtual-key code 
-		keyData = lParam;          // key data 
-
-		switch (fwKeys)
-		{
-		case ID_MENU_LOL:
-			//TogglePause();
-			break;
-
-		case ID_CAMERA_OVERVIEW:
-			//SwitchToCamera(C_OVERVIEW);
-			break;
-
-		case ID_CAMERA_ROBOTBEHIND:
-			//SwitchToCamera(C_ROBOT_BEHIND);
-			break;
-
-		case ID_CAMERA_ROBOTFRONT:
-			//SwitchToCamera(C_ROBOT_FRONT);
-			break;
-
-		default:
-			break;
-		}
+		_application->WindowProc(APP_WM_COMMAND, wParam, lParam);
 		break;
 
-	case WM_CLOSE:					// windows is closing
+	case WM_CLOSE:	// windows is closing
 
-									// deselect rendering context and delete it
+		// deselect rendering context and delete it
 		wglMakeCurrent(hDC, NULL);
 		wglDeleteContext(hRC);
 
@@ -161,15 +116,13 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 		break;
 
 	case WM_KEYUP:
-		//input('0');
+		_application->WindowProc(APP_WM_KEYUP, wParam, lParam);
 		break;
 
 	case WM_KEYDOWN:
-		fwKeys = (int)wParam;    // virtual-key code 
-		keyData = lParam;          // key data 
+		_application->WindowProc(APP_WM_KEYDOWN, wParam, lParam);
 
-		//input((char)wParam);
-
+		/*
 		switch (fwKeys)
 		{
 		case VK_ESCAPE:
@@ -178,14 +131,14 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 		default:
 			break;
 		}
-
+		*/
 		break;
 
 	default:
 		break;
 	}
 
-	_application->WindowProc(wParam, lParam);
+	//_application->WindowProc(wParam, lParam);
 
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);
 }

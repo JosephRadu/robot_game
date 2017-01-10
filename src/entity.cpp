@@ -36,3 +36,13 @@ int Entity::Angle()
 {
 	return iAngle;
 }
+
+void Entity::SetTimeScale(float dt)
+{
+	fTimeScale = dt;
+}
+
+float Entity::TimeScale()
+{
+	return fTimeScale;
+}

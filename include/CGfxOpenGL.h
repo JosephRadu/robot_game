@@ -32,7 +32,7 @@ public:
 	*/
 	void Update(float dt);
 
-	void WindowProc(WPARAM& wParam, LPARAM& lParam);
+	void WindowProc(int iWindowProc, WPARAM& wParam, LPARAM& lParam);
 
 	Manager_App_State& GetStateManager();
 };

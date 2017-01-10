@@ -30,10 +30,8 @@ void App_State_Playing::UpdateCamera()
 	glViewport(0, 0, m_windowWidth, m_windowHeight);	// reset the viewport to new dimensions
 	glMatrixMode(GL_PROJECTION);			// set projection matrix current matrix
 	glLoadIdentity();						// reset projection matrix
-
-											// calculate aspect ratio of window
+								// calculate aspect ratio of window
 	gluPerspective(90.0f, (GLfloat)m_windowWidth / (GLfloat)m_windowHeight, 1.0f, 1000.0f);
-
 
 	V3D v3dCP(camera[iCameraSelected].Position());
 	V3D v3dCD(camera[iCameraSelected].Direction());
@@ -71,14 +69,14 @@ void App_State_Playing::input(char s) {
 		return;
 	}
 
-	/*
-	if (iCameraSelected == C_ROBOT_BEHIND || iCameraSelected == C_ROBOT_FRONT)
+	
+	if (iCameraSelected == C_OVERVIEW )
 	{
-	if (s == 38 || s == 37 || s == 39 || s == 40 || s == 84 || s == 71) {
-	camera[iCameraSelected].Move(s);
+		if (s == 38 || s == 37 || s == 39 || s == 40 || s == 84 || s == 71) {
+			camera[iCameraSelected].Move(s);
+		}
 	}
-	}
-	*/
+	
 
 	if (iCameraSelected == C_ROBOT_BEHIND) {
 		camera[iCameraSelected].Direction().set(theRobot->Direction());
@@ -138,140 +136,6 @@ void App_State_Playing::input(char s) {
 
 }
 
-/*
-
-void Application::OBJRead(std::string s)
-{
-	fstream modelfile(s, std::ios_base::in);
-	int iNumValuesInLine = 0;
-	float num;
-	string text;
-	string line;
-	string name;
-
-	// Raw data
-	vector<float> rawVertices; //v
-	vector<float> rawVerticesTextures; //vt
-	vector<float> rawVerticesNormals; //vn
-
-									  // Actual ones we use for openGL.
-	vector<float> vertices; //f
-	vector<int> verticesTextures;
-	vector<int> verticesNormals;
-
-	if (modelfile.is_open())
-	{
-		while (getline(modelfile, line))
-		{
-			istringstream parser;
-			parser.str(line);
-			string character;
-
-			parser >> character;
-
-			if (character == "v")
-			{
-				iNumValuesInLine = 0;
-				while (parser >> num)
-				{
-					rawVertices.push_back(num);
-					iNumValuesInLine++;
-				}
-			}
-
-			else if (character == "vn")
-			{
-				while (parser >> num)
-					rawVerticesNormals.push_back(num);
-			}
-
-			else if (character == "vt")
-			{
-				while (parser >> num)
-					rawVerticesTextures.push_back(num);
-			}
-
-			else if (character == "f")
-			{
-				while (parser >> num)
-				{
-					for (int i = 0; i < 3; i++) //V
-						vertices.push_back(rawVertices.at((num * 3) - 3 + i));
-
-					int iNumSlashes = GetNextSlashes(parser);
-
-					if (iNumSlashes == 1) //VT
-					{
-						// line is format   v/vt...
-						// so read the vt value
-						parser >> num;
-
-						// after the texture value - should be a normal
-						iNumSlashes = 0;
-						GetNextSlashes(parser);
-						if (iNumSlashes == 1) //VN
-						{
-							// pick up the normal
-							parser >> num;
-							for (int i = 0; i < 3; i++)
-								verticesNormals.push_back(rawVerticesNormals.at((num * 3) - 3 + i));
-						}
-					}
-					else if (iNumSlashes == 2) //   v/vt/vn is the line
-					{
-						// pick up the normal index
-						parser >> num;
-
-						for (int i = 0; i < 3; i++) //VN
-							verticesNormals.push_back(rawVerticesNormals.at((num * 3) - 3 + i));
-					}
-					else
-					{
-						// no slashes so ready to read next face value
-					}
-				}
-			}
-		}
-	}
-	V3D v3d;
-	cube.Vertices().clear();
-	int k = -1;
-	for (auto & i : vertices) {
-		k++;
-		if (k == 0) {
-			v3d.setX(i);
-		}
-
-		if (k == 1) {
-			v3d.setY(i);
-		}
-
-		if (k == 2) {
-			v3d.setZ(i);
-			cube.Vertices().push_back(v3d);
-			k = -1;
-		}
-	}
-
-	//std::reverse(cube.Vertices().begin(), cube.Vertices().end());
-
-	modelfile.close();
-}
-
-int Application::GetNextSlashes(istringstream& parserIn)
-{
-	int slashes = 0;
-	int c = parserIn.peek();
-
-	while (parserIn.peek() == 0x2f)
-	{
-		slashes++;
-		parserIn.get();
-	}
-	return slashes;
-}
-*/
-
 
 void App_State_Playing::ExitState()
 {
@@ -322,7 +186,7 @@ void App_State_Playing::Init()
 	camera[2].Direction().set(0, 0, 1);
 	camera[2].Position().set(20, 0, 30);
 
-	theRobot->Direction().set(0, 0, 0);
+	theRobot->Direction().set(0, 0, 0.01);
 	theRobot->Rotation().set(0, 0, 0);
 	theRobot->Position().set(-20, 0, -20);
 
@@ -333,51 +197,47 @@ void App_State_Playing::Init()
 
 void App_State_Playing::Update(float dt)
 {
-
-	if (bPaused) {
-		return;
+	if (!bPaused) {
+		theRobot->SetTimeScale(dt);
+		camera[0].SetTimeScale(dt);
+		camera[1].SetTimeScale(dt);
+		camera[2].SetTimeScale(dt);
+		theRobot->AnimationPrepare(dt);
 	}
 
-	theRobot->AnimationPrepare(dt);
-
-	// clear screen and depth buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 	cube.Draw();
-
-	theRobot->DrawRobot();		// draw the robot
-
-
+	theRobot->DrawRobot();
 }
 
-void App_State_Playing::WindowProc(WPARAM& wParam, LPARAM& lParam)
+void App_State_Playing::WindowProc(int iWindowProc, WPARAM& wParam, LPARAM& lParam)
 {
 	int fwKeys;
 	LPARAM keyData;
 
 	// dispatch messages
-	switch (uMsg)
+	switch (iWindowProc)
 	{
-	case WM_COMMAND:
+	case APP_WM_COMMAND:
 		fwKeys = (int)wParam;    // virtual-key code 
 		keyData = lParam;          // key data 
 
 		switch (fwKeys)
 		{
 		case ID_MENU_LOL:
-			//TogglePause();
+			TogglePause();
 			break;
 
 		case ID_CAMERA_OVERVIEW:
-			//SwitchToCamera(C_OVERVIEW);
+			SwitchToCamera(C_OVERVIEW);
 			break;
 
 		case ID_CAMERA_ROBOTBEHIND:
-			//SwitchToCamera(C_ROBOT_BEHIND);
+			SwitchToCamera(C_ROBOT_BEHIND);
 			break;
 
 		case ID_CAMERA_ROBOTFRONT:
-			//SwitchToCamera(C_ROBOT_FRONT);
+			SwitchToCamera(C_ROBOT_FRONT);
 			break;
 
 		default:
@@ -385,34 +245,15 @@ void App_State_Playing::WindowProc(WPARAM& wParam, LPARAM& lParam)
 		}
 		break;
 
-	case WM_ACTIVATEAPP:		// activate app
-		break;
-
-	case WM_LBUTTONDOWN:		// left mouse button
-		break;
-
-	case WM_RBUTTONDOWN:		// right mouse button
-		break;
-
-	case WM_MOUSEMOVE:			// mouse movement
-		break;
-
-	case WM_LBUTTONUP:			// left button release
-		break;
-
-	case WM_RBUTTONUP:			// right button release
-		break;
-
-	case WM_KEYUP:
+	case APP_WM_KEYUP:
 		input('0');
 		break;
 
-	case WM_KEYDOWN:
+	case APP_WM_KEYDOWN:
 		fwKeys = (int)wParam;    // virtual-key code 
 		keyData = lParam;          // key data 
 		input((char)wParam);
 		break;
-
 
 	default:
 		break;

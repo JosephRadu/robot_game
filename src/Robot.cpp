@@ -25,6 +25,7 @@ Robot::Robot()
 	bInitialMovement = false;
 
 	v3dPosition.set(0, 0, 0);
+	v3dDirection.set(0, 0, 1);
 
 	fAngle = 0;
 
@@ -225,15 +226,15 @@ void Robot::AnimationPrepare(float dt)
 		// Always update the movement of arms and legs.
 		// legs
 		if (legStates[side] == FORWARD_STATE)
-			legAngles[side] += fSpeedLeg * dt;
+			legAngles[side] += fSpeedLeg * fTimeScale;
 		else
-			legAngles[side] -= fSpeedLeg * dt;
+			legAngles[side] -= fSpeedLeg * fTimeScale;
 
 		// arms
 		if (armStates[side] == FORWARD_STATE)
-			armAngles[side] += fSpeedArm * dt;
+			armAngles[side] += fSpeedArm * fTimeScale;
 		else
-			armAngles[side] -= fSpeedArm * dt;
+			armAngles[side] -= fSpeedArm * fTimeScale;
 
 
 
@@ -243,7 +244,7 @@ void Robot::AnimationPrepare(float dt)
 void Robot::Move(int i)
 {
 	if (i == 1) {
-		v3dPosition.set(v3dPosition.x() + v3dDirection.x(), v3dPosition.y(), v3dPosition.z() + v3dDirection.z());
+		v3dPosition.set(v3dPosition.x() + (v3dDirection.x() *( fSpeedMovement * fTimeScale)), v3dPosition.y(), v3dPosition.z() + (v3dDirection.z() * (fSpeedMovement * fTimeScale)));
 	}
 }
 
@@ -282,11 +283,8 @@ void Robot::AnimationMove(int i) {
 
 		movementState = MOVEMENT_FORWARDS;
 		break;
-
-
 	}
 }
-
 
 void Robot::Update()
 {
@@ -313,6 +311,6 @@ void Robot::rotate(float f)
 	if (fAngle >= 360.0f)
 		fAngle = 0.0f;
 
-	v3dDirection.setX(sin(PI * fAngle / 180) * 1);
-	v3dDirection.setZ(cos(PI * fAngle / 180) * 1);
+	v3dDirection.setX(sin(PI * fAngle / 180) * ( 1 * fTimeScale));
+	v3dDirection.setZ(cos(PI * fAngle / 180) * ( 1 * fTimeScale));
 }

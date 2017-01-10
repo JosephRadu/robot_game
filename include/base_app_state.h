@@ -19,6 +19,8 @@
 #define TWO_PI PI*2.0
 #define HALF_PI PI/2.0
 
+enum _WindowProc { APP_WM_COMMAND, APP_WM_KEYDOWN, APP_WM_KEYUP};
+
 class Base_App_State
 {
 private:
@@ -40,7 +42,7 @@ public:
 
 	virtual void ExitState() = 0;
 
-	virtual void WindowProc(WPARAM& wParam, LPARAM& lParam) = 0;
+	virtual void WindowProc(int iWindowProc, WPARAM& wParam, LPARAM& lParam) = 0;
 
 	virtual void SetupProjection(int width, int height) = 0;
 

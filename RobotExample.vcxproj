@@ -101,6 +101,7 @@
     <ClCompile Include="src\drawable.cpp" />
     <ClCompile Include="src\entity.cpp" />
     <ClCompile Include="src\manager_app_state.cpp" />
+    <ClCompile Include="src\obj_reader.cpp" />
     <ClCompile Include="src\Robot.cpp" />
     <ClCompile Include="src\V3D.cpp" />
     <ClCompile Include="src\winmain.cpp" />
@@ -113,6 +114,7 @@
     <ClInclude Include="include\drawable.h" />
     <ClInclude Include="include\entity.h" />
     <ClInclude Include="include\manager_app_state.h" />
+    <ClInclude Include="include\obj_reader.h" />
     <ClInclude Include="include\Robot.h" />
     <ClInclude Include="include\timer.h" />
     <ClInclude Include="include\V3D.h" />

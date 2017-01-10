@@ -19,8 +19,8 @@ class Camera : public Entity
 {
 private:
 	int id = 0; // Camera unique ID
-	const float fRotateSpeed = 0.08; // Speed of rotation.
-	const float fForwardSpeed = 0.4; // Strafing stpeed.
+	const float fRotateSpeed = 2; // Speed of rotation.
+	const float fForwardSpeed = 80; // Strafing stpeed.
 public:
 	/*!
 	\brief Default constructor.

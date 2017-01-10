@@ -67,7 +67,7 @@ public:
 	\param event is a reference to an event.
 	\param v2dMousePosIn is a reference to the 2D coordinates of the mouse position.
 	*/
-	void WindowProc(WPARAM& wParam, LPARAM& lParam);
+	void WindowProc(int iWindowProc, WPARAM& wParam, LPARAM& lParam);
 
 	void SetupProjection(int width, int height);
 };

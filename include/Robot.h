@@ -27,6 +27,8 @@ private:
 
 	char movementState;
 
+	float fSpeedMovement = 1000;
+
 	float x;
 	float y;
 	float z;

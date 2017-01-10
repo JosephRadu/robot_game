@@ -27,9 +27,9 @@ void Manager_App_State::StateInit(appState state)
 	states[state]->Init();
 }
 
-void Manager_App_State::WindowProc(UINT& uMsg, WPARAM& wParam, LPARAM& lParam)
+void Manager_App_State::WindowProc(int iWindowProc, WPARAM& wParam, LPARAM& lParam)
 {
-	states[appStateCurrent]->WindowProc(uMsg, wParam, lParam);
+	states[appStateCurrent]->WindowProc(iWindowProc, wParam, lParam);
 }
 
 void Manager_App_State::Update(float dt)

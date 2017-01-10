@@ -55,7 +55,7 @@ public:
 	\brief 
 	\param 
 	*/
-	void WindowProc(WPARAM& wParam, LPARAM& lParam);
+	void WindowProc(int iWindowProc, WPARAM& wParam, LPARAM& lParam);
 
 	/*!
 	\ brief Update current state selected.
