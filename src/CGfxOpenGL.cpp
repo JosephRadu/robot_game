@@ -9,15 +9,16 @@
 
 Application::Application()
 {
+	manager_app_state.StateCreateStates();
 }
 
 Application::~Application()
 {
+
 }
 
 void Application::Init()
 {
-	manager_app_state.StateCreateStates();
 	manager_app_state.StateSwitch(PLAYING);
 	manager_app_state.StateInit(PLAYING);
 }
@@ -28,7 +29,12 @@ void Application::Update(float dt)
 }
 
 
-void Application::WindowProc(UINT& uMsg, WPARAM& wParam, LPARAM& lParam)
+void Application::WindowProc(WPARAM& wParam, LPARAM& lParam)
 {
-	manager_app_state.WindowProc(uMsg, wParam, lParam);
+	manager_app_state.WindowProc(wParam, lParam);
+}
+
+Manager_App_State&  Application::GetStateManager()
+{
+	return manager_app_state;
 }

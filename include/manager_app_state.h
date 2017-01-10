@@ -55,10 +55,13 @@ public:
 	\brief 
 	\param 
 	*/
-	void WindowProc(UINT& uMsg, WPARAM& wParam, LPARAM& lParam);
+	void WindowProc(WPARAM& wParam, LPARAM& lParam);
 
 	/*!
 	\ brief Update current state selected.
 	*/
 	void Update();
+
+
+	std::unique_ptr <Base_App_State>& CurrentState();
 };

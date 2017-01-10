@@ -310,7 +310,7 @@ void App_State_Playing::Init()
 	cube.Scale().setZ(100);
 
 	//OBJRead("teapot.obj");
-	iCameraSelected = C_ROBOT_BEHIND;
+	iCameraSelected = C_OVERVIEW;
 
 	camera[0].Position().set(0, 20, 0);
 	camera[0].Direction().set(-0.67, -1, -0.75);
@@ -333,15 +333,89 @@ void App_State_Playing::Init()
 
 void App_State_Playing::Update(float dt)
 {
+
+	if (bPaused) {
+		return;
+	}
+
+	theRobot->AnimationPrepare(dt);
+
 	// clear screen and depth buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	cube.Draw();
 
 	theRobot->DrawRobot();		// draw the robot
+
+
 }
 
-void App_State_Playing::WindowProc(HWND hWnd, UINT& uMsg, WPARAM& wParam, LPARAM& lParam)
+void App_State_Playing::WindowProc(WPARAM& wParam, LPARAM& lParam)
 {
-	
+	int fwKeys;
+	LPARAM keyData;
+
+	// dispatch messages
+	switch (uMsg)
+	{
+	case WM_COMMAND:
+		fwKeys = (int)wParam;    // virtual-key code 
+		keyData = lParam;          // key data 
+
+		switch (fwKeys)
+		{
+		case ID_MENU_LOL:
+			//TogglePause();
+			break;
+
+		case ID_CAMERA_OVERVIEW:
+			//SwitchToCamera(C_OVERVIEW);
+			break;
+
+		case ID_CAMERA_ROBOTBEHIND:
+			//SwitchToCamera(C_ROBOT_BEHIND);
+			break;
+
+		case ID_CAMERA_ROBOTFRONT:
+			//SwitchToCamera(C_ROBOT_FRONT);
+			break;
+
+		default:
+			break;
+		}
+		break;
+
+	case WM_ACTIVATEAPP:		// activate app
+		break;
+
+	case WM_LBUTTONDOWN:		// left mouse button
+		break;
+
+	case WM_RBUTTONDOWN:		// right mouse button
+		break;
+
+	case WM_MOUSEMOVE:			// mouse movement
+		break;
+
+	case WM_LBUTTONUP:			// left button release
+		break;
+
+	case WM_RBUTTONUP:			// right button release
+		break;
+
+	case WM_KEYUP:
+		input('0');
+		break;
+
+	case WM_KEYDOWN:
+		fwKeys = (int)wParam;    // virtual-key code 
+		keyData = lParam;          // key data 
+		input((char)wParam);
+		break;
+
+
+	default:
+		break;
+	}
+
 }

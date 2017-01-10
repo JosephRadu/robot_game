@@ -12,6 +12,7 @@ bool exiting = false;
 long windowWidth = 1024;
 long windowHeight = 768;
 long windowBits = 32;
+int height, width;
 bool fullscreen = false;
 HDC hDC; 
 
@@ -48,11 +49,31 @@ void SetupPixelFormat(HDC hDC)
 	SetPixelFormat(hDC, pixelFormat, &pfd);
 }
 
+
+void SetupProjection(int width, int height)
+{
+	if (height == 0)					// don't want a divide by zero
+	{
+		height = 1;
+	}
+
+	glViewport(0, 0, width, height);		// reset the viewport to new dimensions
+	glMatrixMode(GL_PROJECTION);			// set projection matrix current matrix
+	glLoadIdentity();						// reset projection matrix
+											// calculate aspect ratio of window
+	gluPerspective(90.0f, (GLfloat)width / (GLfloat)height, 1.0f, 1000.0f);
+
+	glMatrixMode(GL_MODELVIEW);				// set modelview matrix
+	glLoadIdentity();						// reset modelview matrix
+
+	//m_windowWidth = width;
+	//m_windowHeight = height;
+}
+
 LRESULT CALLBACK MainWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	static HDC hDC;
 	static HGLRC hRC;
-	int height, width;
 
 	int fwKeys;
 	LPARAM keyData;
@@ -62,7 +83,7 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 	{
 	case WM_CREATE:			// window creation
 		hDC = GetDC(hWnd);
-		//SetupPixelFormat(hDC);
+		SetupPixelFormat(hDC);
 		//SetupPalette();
 		hRC = wglCreateContext(hDC);
 		wglMakeCurrent(hDC, hRC);
@@ -74,38 +95,31 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 	case WM_QUIT:
 		break;
 	case WM_COMMAND:
-
-
-
 		fwKeys = (int)wParam;    // virtual-key code 
 		keyData = lParam;          // key data 
 
 		switch (fwKeys)
 		{
 		case ID_MENU_LOL:
-			TogglePause();
+			//TogglePause();
 			break;
 
 		case ID_CAMERA_OVERVIEW:
-			SwitchToCamera(C_OVERVIEW);
+			//SwitchToCamera(C_OVERVIEW);
 			break;
 
 		case ID_CAMERA_ROBOTBEHIND:
-			SwitchToCamera(C_ROBOT_BEHIND);
+			//SwitchToCamera(C_ROBOT_BEHIND);
 			break;
 
 		case ID_CAMERA_ROBOTFRONT:
-			SwitchToCamera(C_ROBOT_FRONT);
+			//SwitchToCamera(C_ROBOT_FRONT);
 			break;
 
 		default:
 			break;
 		}
 		break;
-
-
-
-
 
 	case WM_CLOSE:					// windows is closing
 
@@ -120,9 +134,6 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 	case WM_SIZE:
 		height = HIWORD(lParam);		// retrieve width and height
 		width = LOWORD(lParam);
-
-		SetupProjection(width, height);
-
 		break;
 
 	case WM_ACTIVATEAPP:		// activate app
@@ -150,14 +161,14 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 		break;
 
 	case WM_KEYUP:
-		input('0');
+		//input('0');
 		break;
 
 	case WM_KEYDOWN:
 		fwKeys = (int)wParam;    // virtual-key code 
 		keyData = lParam;          // key data 
 
-		input((char)wParam);
+		//input((char)wParam);
 
 		switch (fwKeys)
 		{
@@ -174,6 +185,8 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 		break;
 	}
 
+	_application->WindowProc(wParam, lParam);
+
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);
 }
 
@@ -184,9 +197,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	MSG		   msg;				// message
 	RECT	   windowRect;
 
-	_application = new Application;
 	g_hiResTimer = new CHiResTimer;
-
+	_application = new Application;
 	windowRect.left=(long)0;						// Set Left Value To 0
 	windowRect.right=(long)windowWidth;	// Set Right Value To Requested Width
 	windowRect.top=(long)0;							// Set Top Value To 0
@@ -233,10 +245,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	ShowWindow(hwnd, SW_SHOW);			// display the window
 	UpdateWindow(hwnd);					// update the window
-
 	_application->Init();
 	g_hiResTimer->Init();
-
+	_application->GetStateManager().CurrentState()->SetupProjection(width, height);
 	while (!exiting)
 	{
 		_application->Update(g_hiResTimer->GetElapsedSeconds(1));

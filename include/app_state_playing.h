@@ -18,13 +18,9 @@ enum _Camera { C_OVERVIEW = 0, C_ROBOT_BEHIND = 1, C_ROBOT_FRONT = 2 };
 class App_State_Playing : public Base_App_State
 {
 private:
-
 	bool bPaused;
 
 	Drawable cube;
-
-	int m_windowWidth;
-	int m_windowHeight;
 
 	Robot *theRobot;
 	int iCameraSelected;
@@ -32,8 +28,6 @@ private:
 	Camera camera[3];
 
 	// Bespoke Functions
-
-	void SetupProjection(int width, int height);
 
 	void TogglePause();
 
@@ -73,5 +67,7 @@ public:
 	\param event is a reference to an event.
 	\param v2dMousePosIn is a reference to the 2D coordinates of the mouse position.
 	*/
-	void WindowProc(UINT& uMsg, WPARAM& wParam, LPARAM& lParam);
+	void WindowProc(WPARAM& wParam, LPARAM& lParam);
+
+	void SetupProjection(int width, int height);
 };

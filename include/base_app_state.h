@@ -23,6 +23,9 @@ class Base_App_State
 {
 private:
 
+protected:
+	int m_windowWidth;
+	int m_windowHeight;
 public:
 	/*!
 	\brief Initialise the state.
@@ -37,6 +40,9 @@ public:
 
 	virtual void ExitState() = 0;
 
-	virtual void WindowProc(UINT&uMsg, WPARAM& wParam, LPARAM& lParam) = 0;
+	virtual void WindowProc(WPARAM& wParam, LPARAM& lParam) = 0;
+
+	virtual void SetupProjection(int width, int height) = 0;
+
 
 };

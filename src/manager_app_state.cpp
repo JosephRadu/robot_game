@@ -9,7 +9,7 @@
 
 Manager_App_State::Manager_App_State()
 {
-	appStateCurrent = PLAYING;
+
 }
 
 void Manager_App_State::StateCreateStates()
@@ -35,4 +35,9 @@ void Manager_App_State::WindowProc(UINT& uMsg, WPARAM& wParam, LPARAM& lParam)
 void Manager_App_State::Update(float dt)
 {
 	states[appStateCurrent]->Update(dt);
+}
+
+std::unique_ptr <Base_App_State>&  Manager_App_State::CurrentState()
+{
+	return states[appStateCurrent];
 }
