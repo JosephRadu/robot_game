@@ -1,5 +1,10 @@
 #include "obj_reader.h"
 
+OBJ_Reader::OBJ_Reader()
+{
+
+}
+
 void OBJ_Reader::Read(std::string s)
 {
 	std::fstream modelfile(s, std::ios_base::in);
@@ -91,29 +96,27 @@ void OBJ_Reader::Read(std::string s)
 		}
 	}
 
-	/*
+	finalVertices.clear();
+
 	V3D v3d;
-	cube.Vertices().clear();
 	int k = -1;
 	for (auto & i : vertices) {
-	k++;
-	if (k == 0) {
-	v3d.setX(i);
+		k++;
+		if (k == 0) {
+			v3d.setX(i);
+		}
+
+		if (k == 1) {
+			v3d.setY(i);
+		}
+
+		if (k == 2) {
+			v3d.setZ(i);
+			finalVertices.push_back(v3d);
+			k = -1;
+		}
 	}
 
-	if (k == 1) {
-	v3d.setY(i);
-	}
-
-	if (k == 2) {
-	v3d.setZ(i);
-	cube.Vertices().push_back(v3d);
-	k = -1;
-	}
-	}
-
-	//std::reverse(cube.Vertices().begin(), cube.Vertices().end());
-	*/
 	modelfile.close();
 }
 
@@ -130,3 +133,7 @@ int OBJ_Reader::GetNextSlashes(std::istringstream& parserIn)
 	return slashes;
 }
 
+std::vector<V3D> OBJ_Reader::vertices()
+{
+	return finalVertices;
+}

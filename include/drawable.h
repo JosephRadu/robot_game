@@ -21,6 +21,7 @@ class Drawable : public Entity
 private:
 	std::vector<V3D> vertices; // A vector of V3D vertices (storage of polygons essentially).
 	V3D scale;
+	V3D colour;
 public:
 	/*!
 	\brief Default constructor.
@@ -36,6 +37,12 @@ public:
 	\brief Create a plane using the vertices.
 	*/
 	void Init_Plane();
+
+	/*!
+	\brief
+	*/
+	V3D& Colour();
+
 
 	/*!
 	\ brief Return a reference to the vector of V3D vertices.

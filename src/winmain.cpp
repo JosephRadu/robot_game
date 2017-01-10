@@ -4,7 +4,7 @@
 #include <windows.h>
 #include <gl/gl.h>
 #include <gl/glu.h>
-#include "CGfxOpenGL.h"
+#include "application.h"
 #include "timer.h"
 
 bool exiting = false;

@@ -12,6 +12,7 @@ Drawable::Drawable()
 	v3dPosition.set(0, 0, 0);
 	v3dRotation.set(0, 0, 0);
 	scale.set(0, 0, 0);
+	colour.set(0.3, 0.3, 0.3);
 	iAngle = 0;
 }
 
@@ -64,7 +65,7 @@ void Drawable::Draw()
 	glPushMatrix();
 	glTranslatef(v3dPosition.x(), v3dPosition.y(), v3dPosition.z());
 	glRotatef(iAngle, v3dRotation.x(), v3dRotation.y(), v3dRotation.z());	// rotate the drawable on its y-axis
-	glColor3f(0.2f, 0.2f, 0.3f);
+	glColor3f(colour.x(), colour.y(), colour.z());
 	glScalef(scale.x(), scale.y(), scale.z());
 	glBegin(GL_POLYGON);
 
@@ -84,4 +85,9 @@ V3D& Drawable::Scale()
 void Drawable::Update()
 {
 
+}
+
+V3D& Drawable::Colour()
+{
+	return colour;
 }

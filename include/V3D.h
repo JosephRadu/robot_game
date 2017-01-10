@@ -3,7 +3,7 @@
 
 class V3D
 {
-private:
+protected:
 	float fData[3];
 public:
 	V3D();

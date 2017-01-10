@@ -97,7 +97,7 @@
   <ItemGroup>
     <ClCompile Include="src\app_state_playing.cpp" />
     <ClCompile Include="src\camera.cpp" />
-    <ClCompile Include="src\CGfxOpenGL.cpp" />
+    <ClCompile Include="src\application.cpp" />
     <ClCompile Include="src\drawable.cpp" />
     <ClCompile Include="src\entity.cpp" />
     <ClCompile Include="src\manager_app_state.cpp" />
@@ -110,7 +110,7 @@
     <ClInclude Include="include\app_state_playing.h" />
     <ClInclude Include="include\base_app_state.h" />
     <ClInclude Include="include\camera.h" />
-    <ClInclude Include="include\CGfxOpenGL.h" />
+    <ClInclude Include="include\application.h" />
     <ClInclude Include="include\drawable.h" />
     <ClInclude Include="include\entity.h" />
     <ClInclude Include="include\manager_app_state.h" />
@@ -119,6 +119,9 @@
     <ClInclude Include="include\timer.h" />
     <ClInclude Include="include\V3D.h" />
     <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="bitmap1.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -16,9 +16,12 @@
 class OBJ_Reader
 {
 private:
+	std::vector<V3D> finalVertices;
 public:
 	OBJ_Reader();
 	void Read(std::string filename);
 	int GetNextSlashes(std::istringstream& parserIn);
+
+	std::vector<V3D> vertices();
 
 };

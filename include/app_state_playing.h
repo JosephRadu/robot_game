@@ -12,6 +12,7 @@
 #include <fstream>
 #include <sstream>
 #include "resource.h"
+#include "obj_reader.h"
 
 enum _Camera { C_OVERVIEW = 0, C_ROBOT_BEHIND = 1, C_ROBOT_FRONT = 2 };
 
@@ -20,28 +21,24 @@ class App_State_Playing : public Base_App_State
 private:
 	bool bPaused;
 
-	Drawable cube;
+	std::vector <Drawable*> drawables;
 
 	Robot *theRobot;
+
+	Drawable *drawable;
+	OBJ_Reader *obj_reader;
+
 	int iCameraSelected;
 
 	Camera camera[3];
 
+	GLuint image;
+
 	// Bespoke Functions
-
 	void TogglePause();
-
 	void SwitchToCamera(int i);
-
-
 	void input(char s);
-
 	Robot robot();
-
-	//void OBJRead(std::string s);
-
-	//int GetNextSlashes(istringstream& parserIn);
-
 	void UpdateCamera();
 
 public:

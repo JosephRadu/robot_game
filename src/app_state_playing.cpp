@@ -62,7 +62,6 @@ void App_State_Playing::SwitchToCamera(int i)
 	UpdateCamera();
 }
 
-
 void App_State_Playing::input(char s) {
 
 	if (bPaused) {
@@ -96,18 +95,11 @@ void App_State_Playing::input(char s) {
 		);
 	}
 
-
-
-
-
-
 	if (s != 87)
 	{
 		theRobot->AnimationMove(0);
 		//theRobot->Move(0);
 	}
-
-
 
 	switch (s)
 	{
@@ -136,7 +128,6 @@ void App_State_Playing::input(char s) {
 
 }
 
-
 void App_State_Playing::ExitState()
 {
 	delete theRobot;
@@ -146,8 +137,6 @@ Robot App_State_Playing::robot()
 {
 	return *theRobot;
 }
-
-
 
 App_State_Playing::App_State_Playing()
 {
@@ -163,15 +152,61 @@ void App_State_Playing::Init()
 
 	bPaused = false;
 
-	cube.Init_Plane();
-	cube.Position().setZ(0);
-	cube.Position().setX(0);
-	cube.Position().setY(-12);
-	cube.Rotation().setY(1);
-	//cube.SetAngle(45);
-	cube.Scale().setX(100);
-	cube.Scale().setY(100);
-	cube.Scale().setZ(100);
+	
+	
+	drawable = new Drawable;
+	drawable->Init_Plane();
+	drawable->Position().setZ(0);
+	drawable->Position().setX(0);
+	drawable->Position().setY(-12);
+	drawable->Rotation().setY(1);
+	drawable->Scale().setX(100);
+	drawable->Scale().setZ(100);
+	drawable->Colour().set(0.5, 0.5, 0.25);
+
+	drawables.push_back(drawable);
+
+	drawable = new Drawable;
+	drawable->Init_Plane();
+	drawable->Position().setZ(-100);
+	drawable->Position().setX(0);
+	drawable->Position().setY(-12);
+	drawable->Rotation().setX(1);
+	drawable->SetAngle(90);
+	drawable->Scale().setX(100);
+	drawable->Scale().setZ(10);
+	drawable->Colour().set(0.25, 0.3, 0.25);
+
+	drawables.push_back(drawable);
+
+	drawable = new Drawable;
+	drawable->Init_Plane();
+	drawable->Position().setZ(0);
+	drawable->Position().setX(-100);
+	drawable->Position().setY(-12);
+	drawable->Rotation().setZ(1);
+	drawable->SetAngle(270);
+	drawable->Scale().setX(10);
+	drawable->Scale().setZ(100);
+	drawable->Colour().set(0.4, 0.3, 0.3);
+
+	drawables.push_back(drawable);
+
+	obj_reader->Read("teapot.obj");
+
+	drawable = new Drawable;
+	drawable->Vertices() = obj_reader->vertices();
+	drawable->Position().setZ(0);
+	drawable->Position().setX(0);
+	drawable->Position().setY(0);
+	drawable->Rotation().setY(1);
+	drawable->Scale().setX(1);
+	drawable->Scale().setZ(1);
+	drawable->Colour().set(0.5, 0.5, 0.25);
+
+	drawables.push_back(drawable);
+
+
 
 	//OBJRead("teapot.obj");
 	iCameraSelected = C_OVERVIEW;
@@ -195,6 +230,8 @@ void App_State_Playing::Init()
 	UpdateCamera();
 }
 
+
+
 void App_State_Playing::Update(float dt)
 {
 	if (!bPaused) {
@@ -206,7 +243,11 @@ void App_State_Playing::Update(float dt)
 	}
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	cube.Draw();
+
+	for (auto & i : drawables) {
+		i->Draw();
+	}
+
 	theRobot->DrawRobot();
 }
 
