@@ -26,7 +26,7 @@ private:
 	Robot *theRobot;
 
 	Drawable *drawable;
-	OBJ_Reader *obj_reader;
+	OBJ_Reader obj_reader;
 
 	int iCameraSelected;
 

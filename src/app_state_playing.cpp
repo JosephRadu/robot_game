@@ -152,7 +152,7 @@ void App_State_Playing::Init()
 
 	bPaused = false;
 
-	
+	/*
 	
 	drawable = new Drawable;
 	drawable->Init_Plane();
@@ -192,16 +192,27 @@ void App_State_Playing::Init()
 
 	drawables.push_back(drawable);
 
-	obj_reader->Read("teapot.obj");
+	*/
+
+	std::vector< V3D > vertices;
+	std::vector< V3D > uvs;
+	std::vector< V3D > normals; // Won't be used at the moment.
+	bool res = obj_reader.loadOBJ("teapot.obj", vertices, uvs, normals);
+
+
+
+
+	//obj_reader.Read("teapot.obj");
 
 	drawable = new Drawable;
-	drawable->Vertices() = obj_reader->vertices();
+	drawable->Vertices() = vertices;
+	//drawable->Vertices() = obj_reader.vertices();
 	drawable->Position().setZ(0);
 	drawable->Position().setX(0);
-	drawable->Position().setY(0);
-	drawable->Rotation().setY(1);
-	drawable->Scale().setX(1);
-	drawable->Scale().setZ(1);
+	drawable->Position().setY(-12);
+	drawable->Scale().setX(10);
+	drawable->Scale().setZ(10);
+	drawable->Scale().setY(10);
 	drawable->Colour().set(0.5, 0.5, 0.25);
 
 	drawables.push_back(drawable);

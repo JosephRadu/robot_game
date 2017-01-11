@@ -117,6 +117,7 @@
     <ClInclude Include="include\obj_reader.h" />
     <ClInclude Include="include\Robot.h" />
     <ClInclude Include="include\timer.h" />
+    <ClInclude Include="include\tiny_obj_loader.h" />
     <ClInclude Include="include\V3D.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
