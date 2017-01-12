@@ -20,24 +20,10 @@ void Manager_JSON::ReadFile(std::string sFileName)
 	json j;
 	i >> j;
 
-	/*
-	json json_data_map = {
-	{ "drawable_1",{
-	{ "type", "plane" },
-	{ "position", { 0, 0, -12 } },
-	{ "rotation",{ 0, 1, 0 } },
-	{ "scale",{ 1, 1, 1 } },
-	{ "colour",{ 0.5, 0.5, 0.25 } },
-	} }
-	};
-	*/
-
 	for (json::iterator it = j.begin(); it != j.end(); ++it) {
 
 		if (it.key() == "drawable") {
-
-			std::cout << it.value();
-
+			float f = j[it.key()]["colour"][0];
 		}
 
 	}

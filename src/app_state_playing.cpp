@@ -15,71 +15,41 @@ void App_State_Playing::Init()
 	bPaused = false;
 
 
-	drawable = new Drawable;
-	drawable->Init_Plane();
-	drawable->Position().setZ(0);
-	drawable->Position().setX(0);
-	drawable->Position().setY(-12);
-	drawable->Rotation().setY(1);
-	drawable->Scale().setX(100);
-	drawable->Scale().setZ(100);
-	drawable->Colour().set(0.5, 0.5, 0.25);
+	std::ifstream i("data/objects.json");
+	json j;
+	i >> j;
 
-	drawables.push_back(drawable);
+	for (json::iterator it = j.begin(); it != j.end(); ++it) {
 
-	drawable = new Drawable;
-	drawable->Init_Plane();
-	drawable->Position().setZ(-100);
-	drawable->Position().setX(0);
-	drawable->Position().setY(-12);
-	drawable->Rotation().setX(1);
-	drawable->SetAngle(90);
-	drawable->Scale().setX(100);
-	drawable->Scale().setZ(10);
-	drawable->Colour().set(0.25, 0.3, 0.25);
+		std::size_t found = it.key().find("drawable");
+		if (found != std::string::npos) {
+			drawable = new Drawable;
 
-	drawables.push_back(drawable);
+			if (j[it.key()]["type"] == "plane")
+			{
+				drawable->Init_Plane();
+			}
 
-	drawable = new Drawable;
-	drawable->Init_Plane();
-	drawable->Position().setZ(0);
-	drawable->Position().setX(-100);
-	drawable->Position().setY(-12);
-	drawable->Rotation().setZ(1);
-	drawable->SetAngle(270);
-	drawable->Scale().setX(10);
-	drawable->Scale().setZ(100);
-	drawable->Colour().set(0.4, 0.3, 0.3);
+			drawable->Position().setX(j[it.key()]["position"][0]);
+			drawable->Position().setY(j[it.key()]["position"][1]);
+			drawable->Position().setZ(j[it.key()]["position"][2]);
 
-	drawables.push_back(drawable);
+			drawable->Scale().setX(j[it.key()]["scale"][0]);
+			drawable->Scale().setY(j[it.key()]["scale"][1]);
+			drawable->Scale().setZ(j[it.key()]["scale"][2]);
 
-	
+			drawable->Rotation().setX(j[it.key()]["rotation"][0]);
+			drawable->Rotation().setY(j[it.key()]["rotation"][1]);
+			drawable->Rotation().setZ(j[it.key()]["rotation"][2]);
 
-	//std::vector< V3D > vertices;
-	//std::vector< V3D > uvs;
-	//std::vector< V3D > normals; // Won't be used at the moment.
-	//obj_reader.Read("teapot.obj");
+			drawable->Colour().setX(j[it.key()]["colour"][0]);
+			drawable->Colour().setY(j[it.key()]["colour"][1]);
+			drawable->Colour().setZ(j[it.key()]["colour"][2]);
 
-
-
-
-	//obj_reader.Read("teapot.obj");
-	/*
-	drawable = new Drawable;
-	drawable->Vertices() = vertices;
-	//drawable->Vertices() = obj_reader.vertices();
-	drawable->Position().setZ(0);
-	drawable->Position().setX(0);
-	drawable->Position().setY(-12);
-	drawable->Scale().setX(0.1);
-	drawable->Scale().setZ(0.1);
-	drawable->Scale().setY(0.1);
-	drawable->Colour().set(0.5, 0.5, 0.25);
-
-	drawables.push_back(drawable);
-	*/
-
-
+			drawable->SetAngle(j[it.key()]["angle"]);
+			drawables.push_back(drawable);
+		}
+	}
 
 	//OBJRead("teapot.obj");
 	iCameraSelected = C_OVERVIEW;
@@ -98,8 +68,6 @@ void App_State_Playing::Init()
 	theRobot->Rotation().set(0, 0, 0);
 	theRobot->Position().set(-20, 0, -20);
 
-	//camera.SetAngle(0);
-	//camera.Position().set(0, 0, -10);
 	UpdateCamera();
 }
 

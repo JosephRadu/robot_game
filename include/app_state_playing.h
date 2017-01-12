@@ -13,6 +13,8 @@
 #include "resource.h"
 #include "obj_reader.h"
 
+#include "manager_json.h"
+
 enum _Camera { C_OVERVIEW = 0, C_ROBOT_BEHIND = 1, C_ROBOT_FRONT = 2 };
 
 class App_State_Playing : public Base_App_State
@@ -23,8 +25,9 @@ private:
 	std::vector <Drawable*> drawables;
 
 	Robot *theRobot;
-
+	
 	Drawable *drawable;
+	Manager_JSON manager_json;
 	OBJ_Reader obj_reader;
 
 	int iCameraSelected;
