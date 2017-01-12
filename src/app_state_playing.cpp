@@ -1,143 +1,5 @@
 #include "app_state_playing.h"
 
-void App_State_Playing::SetupProjection(int width, int height)
-{
-	if (height == 0)					// don't want a divide by zero
-	{
-		height = 1;
-	}
-
-	glViewport(0, 0, width, height);		// reset the viewport to new dimensions
-	glMatrixMode(GL_PROJECTION);			// set projection matrix current matrix
-	glLoadIdentity();						// reset projection matrix
-											// calculate aspect ratio of window
-	gluPerspective(90.0f, (GLfloat)width / (GLfloat)height, 1.0f, 1000.0f);
-
-	glMatrixMode(GL_MODELVIEW);				// set modelview matrix
-	glLoadIdentity();						// reset modelview matrix
-
-	m_windowWidth = width;
-	m_windowHeight = height;
-}
-
-void App_State_Playing::UpdateCamera()
-{
-	if (m_windowHeight == 0)					// don't want a divide by zero
-	{
-		m_windowHeight = 1;
-	}
-
-	glViewport(0, 0, m_windowWidth, m_windowHeight);	// reset the viewport to new dimensions
-	glMatrixMode(GL_PROJECTION);			// set projection matrix current matrix
-	glLoadIdentity();						// reset projection matrix
-								// calculate aspect ratio of window
-	gluPerspective(90.0f, (GLfloat)m_windowWidth / (GLfloat)m_windowHeight, 1.0f, 1000.0f);
-
-	V3D v3dCP(camera[iCameraSelected].Position());
-	V3D v3dCD(camera[iCameraSelected].Direction());
-
-	gluLookAt(
-		v3dCP.x(), v3dCP.y(), v3dCP.z(),
-		v3dCP.x() + v3dCD.x(), v3dCP.y() + v3dCD.y(), v3dCP.z() + v3dCD.z(),
-		0.0f, 1.0f, 0.0f);
-
-
-	glMatrixMode(GL_MODELVIEW);				// set modelview matrix
-	glLoadIdentity();						// reset modelview matrix
-}
-
-void App_State_Playing::TogglePause() {
-	if (bPaused) {
-		bPaused = false;
-	}
-	else {
-		bPaused = true;
-	}
-}
-
-void App_State_Playing::SwitchToCamera(int i)
-{
-	iCameraSelected = i;
-	input('0');
-	UpdateCamera();
-}
-
-void App_State_Playing::input(char s) {
-
-	if (bPaused) {
-		return;
-	}
-
-	
-	if (iCameraSelected == C_OVERVIEW )
-	{
-		if (s == 38 || s == 37 || s == 39 || s == 40 || s == 84 || s == 71) {
-			camera[iCameraSelected].Move(s);
-		}
-	}
-	
-
-	if (iCameraSelected == C_ROBOT_BEHIND) {
-		camera[iCameraSelected].Direction().set(theRobot->Direction());
-		camera[iCameraSelected].Position().set(
-			theRobot->Position().x() - (theRobot->Direction().x() * 10),
-			theRobot->Position().y() - (theRobot->Direction().y() * 10),
-			theRobot->Position().z() - (theRobot->Direction().z() * 10)
-		);
-	}
-
-	if (iCameraSelected == C_ROBOT_FRONT) {
-		camera[iCameraSelected].Direction().set(theRobot->Direction());
-		camera[iCameraSelected].Position().set(
-			theRobot->Position().x() + (theRobot->Direction().x() * 10),
-			theRobot->Position().y() + (theRobot->Direction().y() * 10),
-			theRobot->Position().z() + (theRobot->Direction().z() * 10)
-		);
-	}
-
-	if (s != 87)
-	{
-		theRobot->AnimationMove(0);
-		//theRobot->Move(0);
-	}
-
-	switch (s)
-	{
-		// A
-	case 65:
-		theRobot->rotate(4.0f);
-		break;
-		// D
-	case 68:
-		theRobot->rotate(-4.0f);
-		break;
-		// W
-	case 87:
-		theRobot->AnimationMove(1);
-		theRobot->Move(1);
-		break;
-		// S
-	case 83:
-		theRobot->Move(0);
-		break;
-	default:
-		break;
-	}
-
-	UpdateCamera();
-
-}
-
-void App_State_Playing::ExitState()
-{
-	delete theRobot;
-}
-
-Robot App_State_Playing::robot()
-{
-	return *theRobot;
-}
-
 App_State_Playing::App_State_Playing()
 {
 }
@@ -152,8 +14,7 @@ void App_State_Playing::Init()
 
 	bPaused = false;
 
-	/*
-	
+
 	drawable = new Drawable;
 	drawable->Init_Plane();
 	drawable->Position().setZ(0);
@@ -192,30 +53,31 @@ void App_State_Playing::Init()
 
 	drawables.push_back(drawable);
 
-	*/
+	
 
-	std::vector< V3D > vertices;
-	std::vector< V3D > uvs;
-	std::vector< V3D > normals; // Won't be used at the moment.
-	bool res = obj_reader.loadOBJ("teapot.obj", vertices, uvs, normals);
+	//std::vector< V3D > vertices;
+	//std::vector< V3D > uvs;
+	//std::vector< V3D > normals; // Won't be used at the moment.
+	//obj_reader.Read("teapot.obj");
 
 
 
 
 	//obj_reader.Read("teapot.obj");
-
+	/*
 	drawable = new Drawable;
 	drawable->Vertices() = vertices;
 	//drawable->Vertices() = obj_reader.vertices();
 	drawable->Position().setZ(0);
 	drawable->Position().setX(0);
 	drawable->Position().setY(-12);
-	drawable->Scale().setX(10);
-	drawable->Scale().setZ(10);
-	drawable->Scale().setY(10);
+	drawable->Scale().setX(0.1);
+	drawable->Scale().setZ(0.1);
+	drawable->Scale().setY(0.1);
 	drawable->Colour().set(0.5, 0.5, 0.25);
 
 	drawables.push_back(drawable);
+	*/
 
 
 
@@ -240,7 +102,6 @@ void App_State_Playing::Init()
 	//camera.Position().set(0, 0, -10);
 	UpdateCamera();
 }
-
 
 
 void App_State_Playing::Update(float dt)
@@ -311,4 +172,143 @@ void App_State_Playing::WindowProc(int iWindowProc, WPARAM& wParam, LPARAM& lPar
 		break;
 	}
 
+}
+
+
+void App_State_Playing::SetupProjection(int width, int height)
+{
+	if (height == 0)					// don't want a divide by zero
+	{
+		height = 1;
+	}
+
+	glViewport(0, 0, width, height);		// reset the viewport to new dimensions
+	glMatrixMode(GL_PROJECTION);			// set projection matrix current matrix
+	glLoadIdentity();						// reset projection matrix
+											// calculate aspect ratio of window
+	gluPerspective(90.0f, (GLfloat)width / (GLfloat)height, 1.0f, 1000.0f);
+
+	glMatrixMode(GL_MODELVIEW);				// set modelview matrix
+	glLoadIdentity();						// reset modelview matrix
+
+	m_windowWidth = width;
+	m_windowHeight = height;
+}
+
+void App_State_Playing::UpdateCamera()
+{
+	if (m_windowHeight == 0)					// don't want a divide by zero
+	{
+		m_windowHeight = 1;
+	}
+
+	glViewport(0, 0, m_windowWidth, m_windowHeight);	// reset the viewport to new dimensions
+	glMatrixMode(GL_PROJECTION);			// set projection matrix current matrix
+	glLoadIdentity();						// reset projection matrix
+											// calculate aspect ratio of window
+	gluPerspective(90.0f, (GLfloat)m_windowWidth / (GLfloat)m_windowHeight, 1.0f, 1000.0f);
+
+	V3D v3dCP(camera[iCameraSelected].Position());
+	V3D v3dCD(camera[iCameraSelected].Direction());
+
+	gluLookAt(
+		v3dCP.x(), v3dCP.y(), v3dCP.z(),
+		v3dCP.x() + v3dCD.x(), v3dCP.y() + v3dCD.y(), v3dCP.z() + v3dCD.z(),
+		0.0f, 1.0f, 0.0f);
+
+
+	glMatrixMode(GL_MODELVIEW);				// set modelview matrix
+	glLoadIdentity();						// reset modelview matrix
+}
+
+void App_State_Playing::TogglePause() {
+	if (bPaused) {
+		bPaused = false;
+	}
+	else {
+		bPaused = true;
+	}
+}
+
+void App_State_Playing::SwitchToCamera(int i)
+{
+	iCameraSelected = i;
+	input('0');
+	UpdateCamera();
+}
+
+void App_State_Playing::input(char s) {
+
+	if (bPaused) {
+		return;
+	}
+
+
+	if (iCameraSelected == C_OVERVIEW)
+	{
+		if (s == 38 || s == 37 || s == 39 || s == 40 || s == 84 || s == 71) {
+			camera[iCameraSelected].Move(s);
+		}
+	}
+
+
+	if (iCameraSelected == C_ROBOT_BEHIND) {
+		camera[iCameraSelected].Direction().set(theRobot->Direction());
+		camera[iCameraSelected].Position().set(
+			theRobot->Position().x() - (theRobot->Direction().x() * 10),
+			theRobot->Position().y() - (theRobot->Direction().y() * 10),
+			theRobot->Position().z() - (theRobot->Direction().z() * 10)
+		);
+	}
+
+	if (iCameraSelected == C_ROBOT_FRONT) {
+		camera[iCameraSelected].Direction().set(theRobot->Direction());
+		camera[iCameraSelected].Position().set(
+			theRobot->Position().x() + (theRobot->Direction().x() * 10),
+			theRobot->Position().y() + (theRobot->Direction().y() * 10),
+			theRobot->Position().z() + (theRobot->Direction().z() * 10)
+		);
+	}
+
+	if (s != 87)
+	{
+		theRobot->AnimationMove(0);
+		//theRobot->Move(0);
+	}
+
+	switch (s)
+	{
+		// A
+	case 65:
+		theRobot->rotate(4.0f);
+		break;
+		// D
+	case 68:
+		theRobot->rotate(-4.0f);
+		break;
+		// W
+	case 87:
+		theRobot->AnimationMove(1);
+		theRobot->Move(1);
+		break;
+		// S
+	case 83:
+		theRobot->Move(0);
+		break;
+	default:
+		break;
+	}
+
+	UpdateCamera();
+
+}
+
+void App_State_Playing::ExitState()
+{
+	delete theRobot;
+}
+
+Robot App_State_Playing::robot()
+{
+	return *theRobot;
 }

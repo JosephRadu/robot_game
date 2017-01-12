@@ -9,8 +9,7 @@
 
 #include "base_app_state.h"
 #include <Windows.h>
-#include <fstream>
-#include <sstream>
+
 #include "resource.h"
 #include "obj_reader.h"
 

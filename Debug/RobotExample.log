@@ -1,22 +1,10 @@
 ﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (RobotExample.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  obj_reader.cpp
-h:\documents\visual studio 2015\projects\robot_game\src\obj_reader.cpp(15): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
-h:\documents\visual studio 2015\projects\robot_game\src\obj_reader.cpp(31): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1193): note: see declaration of 'fscanf'
-h:\documents\visual studio 2015\projects\robot_game\src\obj_reader.cpp(40): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1193): note: see declaration of 'fscanf'
-h:\documents\visual studio 2015\projects\robot_game\src\obj_reader.cpp(48): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1193): note: see declaration of 'fscanf'
-h:\documents\visual studio 2015\projects\robot_game\src\obj_reader.cpp(55): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1193): note: see declaration of 'fscanf'
-h:\documents\visual studio 2015\projects\robot_game\src\obj_reader.cpp(62): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1193): note: see declaration of 'fscanf'
-h:\documents\visual studio 2015\projects\robot_game\src\obj_reader.cpp(150): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-h:\documents\visual studio 2015\projects\robot_game\src\obj_reader.cpp(168): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-h:\documents\visual studio 2015\projects\robot_game\src\obj_reader.cpp(168): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
-h:\documents\visual studio 2015\projects\robot_game\src\obj_reader.cpp(177): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-h:\documents\visual studio 2015\projects\robot_game\src\obj_reader.cpp(177): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
-h:\documents\visual studio 2015\projects\robot_game\src\obj_reader.cpp(87): warning C4715: 'OBJ_Reader::loadOBJ': not all control paths return a value
+  app_state_playing.cpp
+h:\documents\visual studio 2015\projects\robot_game\include\json.hpp(6879): warning C4003: not enough actual parameters for macro 'max'
+h:\documents\visual studio 2015\projects\robot_game\src\app_state_playing.cpp(77): warning C4305: 'argument': truncation from 'double' to 'float'
+h:\documents\visual studio 2015\projects\robot_game\src\app_state_playing.cpp(90): warning C4305: 'argument': truncation from 'double' to 'float'
+h:\documents\visual studio 2015\projects\robot_game\src\app_state_playing.cpp(126): warning C4305: 'argument': truncation from 'double' to 'float'
+h:\documents\visual studio 2015\projects\robot_game\src\app_state_playing.cpp(135): warning C4305: 'argument': truncation from 'double' to 'float'
+app_state_playing.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/SAFESEH' specification
   RobotExample.vcxproj -> H:\Documents\Visual Studio 2015\Projects\robot_game\Debug\robot_game.exe
   RobotExample.vcxproj -> Debug\RobotExample.pdb (Full PDB)

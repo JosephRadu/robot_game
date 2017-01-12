@@ -101,6 +101,7 @@
     <ClCompile Include="src\drawable.cpp" />
     <ClCompile Include="src\entity.cpp" />
     <ClCompile Include="src\manager_app_state.cpp" />
+    <ClCompile Include="src\manager_json.cpp" />
     <ClCompile Include="src\obj_reader.cpp" />
     <ClCompile Include="src\Robot.cpp" />
     <ClCompile Include="src\V3D.cpp" />
@@ -113,7 +114,9 @@
     <ClInclude Include="include\application.h" />
     <ClInclude Include="include\drawable.h" />
     <ClInclude Include="include\entity.h" />
+    <ClInclude Include="include\json.hpp" />
     <ClInclude Include="include\manager_app_state.h" />
+    <ClInclude Include="include\manager_json.h" />
     <ClInclude Include="include\obj_reader.h" />
     <ClInclude Include="include\Robot.h" />
     <ClInclude Include="include\timer.h" />
