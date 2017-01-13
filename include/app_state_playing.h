@@ -7,30 +7,38 @@
 *
 */
 
-#include "base_app_state.h"
 #include <Windows.h>
+#include <iostream>
 
+using namespace std;
+
+#include "base_app_state.h"
 #include "resource.h"
 #include "obj_reader.h"
-
-#include "manager_json.h"
 #include "keyboard.h"
+#include "json.hpp"
+#include "drawable.h"
+#include "camera.h"
+#include "Robot.h"
 
+class Robot;
 enum _Camera { C_OVERVIEW = 0, C_ROBOT_BEHIND = 1, C_ROBOT_FRONT = 2 };
 
 class App_State_Playing : public Base_App_State
 {
 private:
+
+	using json = nlohmann::json; // JSON reader.
+
 	bool bPaused;
 
-	std::vector <Drawable*> drawables;
+	vector <Drawable*> drawables;
 
 	Robot *theRobot;
-	
 	Drawable *drawable;
-	Manager_JSON manager_json;
 	OBJ_Reader obj_reader;
 	Keyboard keyboard;
+	json j;
 
 	int iCameraSelected;
 
@@ -41,13 +49,13 @@ private:
 	// Bespoke Functions
 	void TogglePause();
 	void SwitchToCamera(int i);
-	void input(std::string s);
+	void input(string s);
 	Robot robot();
 	void UpdateCamera();
 
 public:
 	/*!
-	\ brief Constructor.
+	\ brief Default constructor..
 	*/
 	App_State_Playing();
 
@@ -58,17 +66,27 @@ public:
 
 	/*!
 	\ brief Update state.
+	\ param float timescale
 	*/
 	void Update(float dt);
 
+	/*!
+	\ brief Exit the state and delete anything we might need to.
+	*/
 	void ExitState();
 
 	/*!
-	\ brief Pass user input.
-	\param event is a reference to an event.
-	\param v2dMousePosIn is a reference to the 2D coordinates of the mouse position.
+	\ brief Pass any events that have happened on the window.
+	\ param int iWIndowProc
+	\ param WPARAM
+	\ param LPARAM
 	*/
 	void WindowProc(int iWindowProc, WPARAM& wParam, LPARAM& lParam);
 
+	/*!
+	\ brief Pass the size of the window.
+	\ param int width
+	\ param int height
+	*/
 	void SetupProjection(int width, int height);
 };

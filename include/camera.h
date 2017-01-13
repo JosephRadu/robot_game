@@ -47,6 +47,7 @@ public:
 
 	/*!
 	\ brief Update the entity.
+	\ param float timescale
 	*/
-	void Update();
+	void Update(float dt);
 };

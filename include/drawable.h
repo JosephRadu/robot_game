@@ -63,6 +63,7 @@ public:
 
 	/*!
 	\brief Entity update function.
+	\ param float timescale
 	*/
-	void Update();
+	void Update(float dt);
 };

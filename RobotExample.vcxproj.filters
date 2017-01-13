@@ -50,9 +50,6 @@
     <ClCompile Include="src\application.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\manager_json.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\keyboard.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -94,13 +91,7 @@
     <ClInclude Include="include\application.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\tiny_obj_loader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\json.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\manager_json.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\keyboard.h">

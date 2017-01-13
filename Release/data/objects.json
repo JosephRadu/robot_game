@@ -1,0 +1,104 @@
+{
+  "drawable_1": {
+    "type": "plane",
+    "colour": [
+      0.5,
+      0.5,
+      0.25
+    ],
+    "position": [
+      0,
+      -12,
+      0
+    ],
+    "rotation": [
+      0,
+      1,
+      0
+    ],
+    "scale": [
+      100,
+      100,
+      100
+    ],
+    "angle": 0
+
+  },
+
+  "drawable_2": {
+    "type": "plane",
+    "colour": [
+      0.25,
+      0.5,
+      0.5
+    ],
+    "position": [
+      0,
+      -12,
+      -100
+    ],
+    "rotation": [
+      1,
+      0,
+      0
+    ],
+    "scale": [
+      100,
+      1,
+      10
+    ],
+    "angle": 90
+  },
+
+    "drawable_3": {
+    "type": "plane",
+    "colour": [
+      1,
+      0.5,
+      0.5
+    ],
+    "position": [
+      -100,
+      -12,
+      0
+    ],
+    "rotation": [
+      0,
+      0,
+      1
+    ],
+    "scale": [
+      10,
+      10,
+      100
+    ],
+    "angle": 270
+  },
+  
+    "drawable_4": {
+    "type": "obj",
+    "colour": [
+      0.2,
+      0.2,
+      0.2
+    ],
+    "position": [
+      -30,
+      -12,
+      -60
+    ],
+    "rotation": [
+      0,
+      1,
+      0
+    ],
+    "scale": [
+      5,
+      5,
+      5
+    ],
+    "angle": 45,
+	"obj": "teapot.obj"
+	
+  }  
+}

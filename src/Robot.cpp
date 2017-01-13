@@ -172,6 +172,57 @@ void Robot::DrawRobot()
 
 void Robot::AnimationPrepare(float dt)
 {
+
+}
+
+void Robot::Move(int i)
+{
+	if (i == 1) {
+		v3dPosition.set(v3dPosition.x() + (v3dDirection.x() *( fSpeedMovement * fTimeScale)), v3dPosition.y(), v3dPosition.z() + (v3dDirection.z() * (fSpeedMovement * fTimeScale)));
+	}
+}
+
+void Robot::AnimationMove(int i) {
+	switch (i)
+	{
+		// We have let go of our key, tell the robot to stop moving.
+	case 0:
+		movementState = MOVEMENT_STATIC;
+		bInitialMovement = false;
+		break;
+	case 1:
+
+		// We tell the robot which parts to move in what direction when we give it an initial command.
+		if (!bInitialMovement) {
+			legStates[LEFT] = FORWARD_STATE;
+			legStates[RIGHT] = BACKWARD_STATE;
+			armStates[LEFT] = FORWARD_STATE;
+			armStates[RIGHT] = BACKWARD_STATE;
+			bInitialMovement = true;
+		}
+
+		movementState = MOVEMENT_FORWARDS;
+
+		break;
+
+	case 2:
+		// We tell the robot which parts to move in what direction when we give it an initial command.
+		if (!bInitialMovement) {
+			legStates[LEFT] = BACKWARD_STATE;
+			legStates[RIGHT] = FORWARD_STATE;
+			armStates[LEFT] = BACKWARD_STATE;
+			armStates[RIGHT] = FORWARD_STATE;
+			bInitialMovement = true;
+		}
+
+		movementState = MOVEMENT_FORWARDS;
+		break;
+	}
+}
+
+void Robot::Update(float dt)
+{
+	fTimeScale = dt;
 	// if leg is moving forward, increase angle, else decrease angle
 	for (char side = 0; side < 2; side++)
 	{
@@ -235,60 +286,7 @@ void Robot::AnimationPrepare(float dt)
 			armAngles[side] += fSpeedArm * fTimeScale;
 		else
 			armAngles[side] -= fSpeedArm * fTimeScale;
-
-
-
 	}
-}
-
-void Robot::Move(int i)
-{
-	if (i == 1) {
-		v3dPosition.set(v3dPosition.x() + (v3dDirection.x() *( fSpeedMovement * fTimeScale)), v3dPosition.y(), v3dPosition.z() + (v3dDirection.z() * (fSpeedMovement * fTimeScale)));
-	}
-}
-
-void Robot::AnimationMove(int i) {
-	switch (i)
-	{
-		// We have let go of our key, tell the robot to stop moving.
-	case 0:
-		movementState = MOVEMENT_STATIC;
-		bInitialMovement = false;
-		break;
-	case 1:
-
-		// We tell the robot which parts to move in what direction when we give it an initial command.
-		if (!bInitialMovement) {
-			legStates[LEFT] = FORWARD_STATE;
-			legStates[RIGHT] = BACKWARD_STATE;
-			armStates[LEFT] = FORWARD_STATE;
-			armStates[RIGHT] = BACKWARD_STATE;
-			bInitialMovement = true;
-		}
-
-		movementState = MOVEMENT_FORWARDS;
-
-		break;
-
-	case 2:
-		// We tell the robot which parts to move in what direction when we give it an initial command.
-		if (!bInitialMovement) {
-			legStates[LEFT] = BACKWARD_STATE;
-			legStates[RIGHT] = FORWARD_STATE;
-			armStates[LEFT] = BACKWARD_STATE;
-			armStates[RIGHT] = FORWARD_STATE;
-			bInitialMovement = true;
-		}
-
-		movementState = MOVEMENT_FORWARDS;
-		break;
-	}
-}
-
-void Robot::Update()
-{
-
 }
 
 float Robot::angle()

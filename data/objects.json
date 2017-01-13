@@ -73,5 +73,32 @@
       100
     ],
     "angle": 270
-  }
+  },
+  
+    "drawable_4": {
+    "type": "obj",
+    "colour": [
+      0.2,
+      0.2,
+      0.2
+    ],
+    "position": [
+      -30,
+      -12,
+      -60
+    ],
+    "rotation": [
+      0,
+      1,
+      0
+    ],
+    "scale": [
+      5,
+      5,
+      5
+    ],
+    "angle": 45,
+	"obj": "teapot.obj"
+	
+  }  
 }

@@ -46,21 +46,18 @@ public:
 	void StateInit(appState state);
 
 	/*!
-	\brief Draws everything necessary to the screen from state selected.
-	\param window is a reference to a render window.
-	*/
-	void Update(float dt);
-
-	/*!
-	\brief 
-	\param 
+	\ brief Pass any events that have happened on the window.
+	\ param int iWIndowProc
+	\ param WPARAM
+	\ param LPARAM
 	*/
 	void WindowProc(int iWindowProc, WPARAM& wParam, LPARAM& lParam);
 
 	/*!
-	\ brief Update current state selected.
+	\ brief Update state.
+	\ param float timescale
 	*/
-	void Update();
+	void Update(float dt);
 
 
 	std::unique_ptr <Base_App_State>& CurrentState();

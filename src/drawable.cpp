@@ -82,7 +82,7 @@ V3D& Drawable::Scale()
 	return scale;
 }
 
-void Drawable::Update()
+void Drawable::Update(float dt)
 {
 
 }

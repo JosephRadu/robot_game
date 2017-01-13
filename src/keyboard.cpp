@@ -12,13 +12,12 @@ Keyboard::Keyboard()
 
 }
 
-void Keyboard::AddKeyBinding(std::string binding, std::string key)
+void Keyboard::AddKeyBinding(string binding, string key)
 {
 	vKeyBindings[binding] = key;
 }
 
-
-std::string Keyboard::GetKeyBinding(std::string binding)
+string Keyboard::GetKeyBinding(string binding)
 {
 	return vKeyBindings.at(binding);
 }

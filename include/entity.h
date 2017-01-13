@@ -66,11 +66,11 @@ public:
 	\ brief Return the timescale
 	\ return float
 	*/
-	float TimeScale ();
-
+	float TimeScale();
 
 	/*!
 	\brief Update the entity.
+	\ param float timescale
 	*/
-	virtual void Update() = 0;
+	virtual void Update(float dt) = 0;
 };

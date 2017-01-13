@@ -52,6 +52,8 @@
     <OutDir>Release\</OutDir>
     <IntDir>Release\</IntDir>
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>./include;$(IncludePath)</IncludePath>
+    <SourcePath>./src;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -83,7 +85,7 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)RobotExample.exe</OutputFile>
+      <OutputFile>$(OutDir)robot_game.exe</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -102,7 +104,6 @@
     <ClCompile Include="src\entity.cpp" />
     <ClCompile Include="src\keyboard.cpp" />
     <ClCompile Include="src\manager_app_state.cpp" />
-    <ClCompile Include="src\manager_json.cpp" />
     <ClCompile Include="src\obj_reader.cpp" />
     <ClCompile Include="src\Robot.cpp" />
     <ClCompile Include="src\V3D.cpp" />
@@ -118,11 +119,9 @@
     <ClInclude Include="include\json.hpp" />
     <ClInclude Include="include\keyboard.h" />
     <ClInclude Include="include\manager_app_state.h" />
-    <ClInclude Include="include\manager_json.h" />
     <ClInclude Include="include\obj_reader.h" />
     <ClInclude Include="include\Robot.h" />
     <ClInclude Include="include\timer.h" />
-    <ClInclude Include="include\tiny_obj_loader.h" />
     <ClInclude Include="include\V3D.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>

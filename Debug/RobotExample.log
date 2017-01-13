@@ -1,10 +1,6 @@
 ﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (RobotExample.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  app_state_playing.cpp
-h:\documents\visual studio 2015\projects\robot_game\include\json.hpp(6879): warning C4003: not enough actual parameters for macro 'max'
-h:\documents\visual studio 2015\projects\robot_game\src\app_state_playing.cpp(77): warning C4305: 'argument': truncation from 'double' to 'float'
-h:\documents\visual studio 2015\projects\robot_game\src\app_state_playing.cpp(90): warning C4305: 'argument': truncation from 'double' to 'float'
-h:\documents\visual studio 2015\projects\robot_game\src\app_state_playing.cpp(126): warning C4305: 'argument': truncation from 'double' to 'float'
-h:\documents\visual studio 2015\projects\robot_game\src\app_state_playing.cpp(135): warning C4305: 'argument': truncation from 'double' to 'float'
-app_state_playing.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/SAFESEH' specification
-  RobotExample.vcxproj -> H:\Documents\Visual Studio 2015\Projects\robot_game\Debug\robot_game.exe
+  drawable.cpp
+d:\users\joseph\documents\visual studio 2015\projects\robot_game\robot_game\src\drawable.cpp(15): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\joseph\documents\visual studio 2015\projects\robot_game\robot_game\src\drawable.cpp(67): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+  RobotExample.vcxproj -> D:\Users\Joseph\Documents\Visual Studio 2015\Projects\robot_game\robot_game\Debug\robot_game.exe
   RobotExample.vcxproj -> Debug\RobotExample.pdb (Full PDB)

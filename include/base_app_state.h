@@ -8,12 +8,8 @@
 */
 
 #include <math.h>
-#include "drawable.h"
-#include "camera.h"
-#include "Robot.h"
 #include <gl/gl.h>
 #include <gl/glu.h>
-#include <windows.h>
 
 #define PI 3.14159
 #define TWO_PI PI*2.0
@@ -40,10 +36,24 @@ public:
 	*/
 	virtual void Update(float dt) = 0;
 
+	/*!
+	\ brief Exit the state and delete anything we might need to.
+	*/
 	virtual void ExitState() = 0;
 
+	/*!
+	\ brief Pass any events that have happened on the window.
+	\ param int iWIndowProc
+	\ param WPARAM
+	\ param LPARAM
+	*/
 	virtual void WindowProc(int iWindowProc, WPARAM& wParam, LPARAM& lParam) = 0;
 
+	/*!
+	\ brief Pass the size of the window.
+	\ param int width
+	\ param int height
+	*/
 	virtual void SetupProjection(int width, int height) = 0;
 
 

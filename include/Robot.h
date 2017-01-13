@@ -69,7 +69,11 @@ public:
 	// updates the robot data
 	void AnimationPrepare(float dt);
 
-	void Update();
+	/*!
+	\brief Entity update function.
+	\ param float timescale
+	*/
+	void Update(float dt);
 
 	void Move(int i);
 

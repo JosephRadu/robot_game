@@ -9,10 +9,14 @@
 
 #include <map>
 #include <vector>
+#include <iostream>
+
+using namespace std;
+
 class Keyboard
 {
 private:
-	std::map<std::string, std::string> vKeyBindings;
+	map<string, string> vKeyBindings;
 public:
 	Keyboard();
 
@@ -21,15 +25,13 @@ public:
 	\param std::string
 	\param std::string
 	*/
-	void AddKeyBinding(std::string binding, std::string key);
-
+	void AddKeyBinding(string binding, string key);
 
 	/*!
 	\brief Get key binding
-	\param std::string Binding
-	\return std::string
+	\param string Binding
+	\return string
 	*/
-	std::string GetKeyBinding(std::string binding);
-
+	string GetKeyBinding(string binding);
 
 };

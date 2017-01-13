@@ -3,8 +3,6 @@
 
 #include "manager_app_state.h"
 
-class Robot;
-
 using namespace std;
 
 class Application
@@ -32,6 +30,12 @@ public:
 	*/
 	void Update(float dt);
 
+	/*!
+	\ brief Pass any events that have happened on the window.
+	\ param int iWIndowProc
+	\ param WPARAM
+	\ param LPARAM
+	*/
 	void WindowProc(int iWindowProc, WPARAM& wParam, LPARAM& lParam);
 
 	Manager_App_State& GetStateManager();

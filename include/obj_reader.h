@@ -26,12 +26,9 @@ public:
 		std::vector < V3D > & out_normals
 	);
 
-
-
 	OBJ_Reader();
 	void Read(std::string filename);
 	int GetNextSlashes(std::istringstream& parserIn);
 
 	std::vector<V3D> vertices();
-
 };

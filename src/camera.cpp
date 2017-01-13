@@ -52,9 +52,9 @@ void Camera::Move(int iMovement)
 	}
 }
 
-void Camera::Update()
+void Camera::Update(float dt)
 {
-
+	fTimeScale = dt;
 }
 
 int Camera::ID()

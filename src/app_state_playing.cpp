@@ -14,20 +14,24 @@ void App_State_Playing::Init()
 
 	bPaused = false;
 
-
-	std::ifstream i("data/objects.json");
-	json j;
+	ifstream i("data/objects.json");
 	i >> j;
 
 	for (json::iterator it = j.begin(); it != j.end(); ++it) {
 
-		std::size_t found = it.key().find("drawable");
+		size_t found = it.key().find("drawable");
 		if (found != std::string::npos) {
 			drawable = new Drawable;
 
 			if (j[it.key()]["type"] == "plane")
 			{
 				drawable->Init_Plane();
+			}
+
+			else if (j[it.key()]["type"] == "obj")
+			{
+				obj_reader.Read(j[it.key()]["obj"]);
+				drawable->Vertices() = obj_reader.vertices();
 			}
 
 			drawable->Position().setX(j[it.key()]["position"][0]);
@@ -51,36 +55,12 @@ void App_State_Playing::Init()
 		}
 	}
 
-	std::ifstream ii("data/keybindings.json");
-	json jj;
-	ii >> jj;
+	ifstream ii("data/keybindings.json");
+	ii >> j;
 
-
-	for (json::iterator it = jj.begin(); it != jj.end(); ++it) {
-
+	for (json::iterator it = j.begin(); it != j.end(); ++it) {
 		keyboard.AddKeyBinding(it.key(), it.value());
 	}
-
-
-
-
-
-	/*
-
-	keyboard.AddKeyBinding("MOVEMENT_ROBOT_FORWARD", 'W');
-	keyboard.AddKeyBinding("MOVEMENT_ROBOT_BACKWARD", 'S');
-	keyboard.AddKeyBinding("MOVEMENT_ROBOT_LEFT", 'A');
-	keyboard.AddKeyBinding("MOVEMENT_ROBOT_RIGHT", 'D');
-
-	keyboard.AddKeyBinding("MOVEMENT_CAMERA_LEFT", 'F');
-	keyboard.AddKeyBinding("MOVEMENT_CAMERA_RIGHT", 'H');
-	keyboard.AddKeyBinding("MOVEMENT_CAMERA_UP", 'T');
-	keyboard.AddKeyBinding("MOVEMENT_CAMERA_DOWN", 'G');
-
-	keyboard.AddKeyBinding("MOVEMENT_CAMERA_FORWARD", 'I');
-	keyboard.AddKeyBinding("MOVEMENT_CAMERA_BACKWARD", 'K');
-	
-	*/
 
 	//OBJRead("teapot.obj");
 	iCameraSelected = C_OVERVIEW;
@@ -106,11 +86,10 @@ void App_State_Playing::Init()
 void App_State_Playing::Update(float dt)
 {
 	if (!bPaused) {
-		theRobot->SetTimeScale(dt);
-		camera[0].SetTimeScale(dt);
-		camera[1].SetTimeScale(dt);
-		camera[2].SetTimeScale(dt);
-		theRobot->AnimationPrepare(dt);
+		theRobot->Update(dt);
+		camera[0].Update(dt);
+		camera[1].Update(dt);
+		camera[2].Update(dt);
 	}
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -124,9 +103,8 @@ void App_State_Playing::Update(float dt)
 
 void App_State_Playing::WindowProc(int iWindowProc, WPARAM& wParam, LPARAM& lParam)
 {
-
-	std::stringstream ss;
-	std::string s;
+	stringstream ss;
+	string s;
 	int fwKeys;
 	LPARAM keyData;
 
@@ -170,7 +148,6 @@ void App_State_Playing::WindowProc(int iWindowProc, WPARAM& wParam, LPARAM& lPar
 		ss << (char)wParam;
 		ss >> s;
 
-
 		input(s);
 		break;
 
@@ -179,7 +156,6 @@ void App_State_Playing::WindowProc(int iWindowProc, WPARAM& wParam, LPARAM& lPar
 	}
 
 }
-
 
 void App_State_Playing::SetupProjection(int width, int height)
 {
@@ -193,6 +169,14 @@ void App_State_Playing::SetupProjection(int width, int height)
 	glLoadIdentity();						// reset projection matrix
 											// calculate aspect ratio of window
 	gluPerspective(90.0f, (GLfloat)width / (GLfloat)height, 1.0f, 1000.0f);
+
+	V3D v3dCP(camera[iCameraSelected].Position());
+	V3D v3dCD(camera[iCameraSelected].Direction());
+
+	gluLookAt(
+		v3dCP.x(), v3dCP.y(), v3dCP.z(),
+		v3dCP.x() + v3dCD.x(), v3dCP.y() + v3dCD.y(), v3dCP.z() + v3dCD.z(),
+		0.0f, 1.0f, 0.0f);
 
 	glMatrixMode(GL_MODELVIEW);				// set modelview matrix
 	glLoadIdentity();						// reset modelview matrix
@@ -249,6 +233,11 @@ void App_State_Playing::input(std::string s) {
 		return;
 	}
 
+	if (s == "0") {
+		theRobot->Move(0);
+		theRobot->AnimationMove(0);
+	}
+
 	if (s == keyboard.GetKeyBinding("MOVEMENT_ROBOT_FORWARD")){
 		theRobot->AnimationMove(1);
 		theRobot->Move(1);
@@ -286,28 +275,29 @@ void App_State_Playing::input(std::string s) {
 	if (iCameraSelected == C_ROBOT_BEHIND) {
 		camera[iCameraSelected].Direction().set(theRobot->Direction());
 		camera[iCameraSelected].Position().set(
-			theRobot->Position().x() - (theRobot->Direction().x() * 10),
-			theRobot->Position().y() - (theRobot->Direction().y() * 10),
-			theRobot->Position().z() - (theRobot->Direction().z() * 10)
+			theRobot->Position().x() - (theRobot->Direction().x() * 1000),
+			theRobot->Position().y() - (theRobot->Direction().y() * 1000),
+			theRobot->Position().z() - (theRobot->Direction().z() * 1000)
 		);
 	}
 
 	if (iCameraSelected == C_ROBOT_FRONT) {
 		camera[iCameraSelected].Direction().set(theRobot->Direction());
 		camera[iCameraSelected].Position().set(
-			theRobot->Position().x() + (theRobot->Direction().x() * 10),
-			theRobot->Position().y() + (theRobot->Direction().y() * 10),
-			theRobot->Position().z() + (theRobot->Direction().z() * 10)
+			theRobot->Position().x() + (theRobot->Direction().x() * 100),
+			theRobot->Position().y() + (theRobot->Direction().y() * 100),
+			theRobot->Position().z() + (theRobot->Direction().z() * 100)
 		);
 	}
 
 	UpdateCamera();
-
 }
 
 void App_State_Playing::ExitState()
 {
 	delete theRobot;
+	delete drawable;
+
 }
 
 Robot App_State_Playing::robot()
