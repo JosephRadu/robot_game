@@ -13,7 +13,7 @@
 /*!
 \ brief Possible types of camera movement.
 */
-enum movement { C_LEFT = 37, C_RIGHT = 39, C_UP = 38, C_DOWN = 40, C_FORWARDS = 84, C_BACKWARDS = 71 };
+enum movement { C_LEFT = 37, C_RIGHT = 39, C_UP = 38, C_DOWN = 40, C_FORWARD = 84, C_BACKWARD = 71 };
 
 class Camera : public Entity
 {

@@ -33,14 +33,14 @@ void Camera::Move(int iMovement)
 		v3dRotation.setY(v3dRotation.y() - (fRotateSpeed * fTimeScale));
 		v3dDirection.setY(tan(v3dRotation.y()));
 		break;
-	case C_FORWARDS:
+	case C_FORWARD:
 		v3dPosition.set(
 			v3dPosition.x() + (v3dDirection.x() * (fForwardSpeed * fTimeScale)),
 			v3dPosition.y() + (v3dDirection.y() * (fForwardSpeed * fTimeScale)),
 			v3dPosition.z() + (v3dDirection.z() * (fForwardSpeed * fTimeScale))
 		);
 		break;
-	case C_BACKWARDS:
+	case C_BACKWARD:
 		v3dPosition.set(
 			v3dPosition.x() - (v3dDirection.x() * (fForwardSpeed * fTimeScale)),
 			v3dPosition.y() - (v3dDirection.y() * (fForwardSpeed * fTimeScale)),

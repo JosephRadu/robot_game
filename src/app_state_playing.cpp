@@ -51,6 +51,37 @@ void App_State_Playing::Init()
 		}
 	}
 
+	std::ifstream ii("data/keybindings.json");
+	json jj;
+	ii >> jj;
+
+
+	for (json::iterator it = jj.begin(); it != jj.end(); ++it) {
+
+		keyboard.AddKeyBinding(it.key(), it.value());
+	}
+
+
+
+
+
+	/*
+
+	keyboard.AddKeyBinding("MOVEMENT_ROBOT_FORWARD", 'W');
+	keyboard.AddKeyBinding("MOVEMENT_ROBOT_BACKWARD", 'S');
+	keyboard.AddKeyBinding("MOVEMENT_ROBOT_LEFT", 'A');
+	keyboard.AddKeyBinding("MOVEMENT_ROBOT_RIGHT", 'D');
+
+	keyboard.AddKeyBinding("MOVEMENT_CAMERA_LEFT", 'F');
+	keyboard.AddKeyBinding("MOVEMENT_CAMERA_RIGHT", 'H');
+	keyboard.AddKeyBinding("MOVEMENT_CAMERA_UP", 'T');
+	keyboard.AddKeyBinding("MOVEMENT_CAMERA_DOWN", 'G');
+
+	keyboard.AddKeyBinding("MOVEMENT_CAMERA_FORWARD", 'I');
+	keyboard.AddKeyBinding("MOVEMENT_CAMERA_BACKWARD", 'K');
+	
+	*/
+
 	//OBJRead("teapot.obj");
 	iCameraSelected = C_OVERVIEW;
 
@@ -93,6 +124,9 @@ void App_State_Playing::Update(float dt)
 
 void App_State_Playing::WindowProc(int iWindowProc, WPARAM& wParam, LPARAM& lParam)
 {
+
+	std::stringstream ss;
+	std::string s;
 	int fwKeys;
 	LPARAM keyData;
 
@@ -127,13 +161,17 @@ void App_State_Playing::WindowProc(int iWindowProc, WPARAM& wParam, LPARAM& lPar
 		break;
 
 	case APP_WM_KEYUP:
-		input('0');
+		input("0");
 		break;
 
 	case APP_WM_KEYDOWN:
 		fwKeys = (int)wParam;    // virtual-key code 
 		keyData = lParam;          // key data 
-		input((char)wParam);
+		ss << (char)wParam;
+		ss >> s;
+
+
+		input(s);
 		break;
 
 	default:
@@ -201,25 +239,50 @@ void App_State_Playing::TogglePause() {
 void App_State_Playing::SwitchToCamera(int i)
 {
 	iCameraSelected = i;
-	input('0');
+	input("0");
 	UpdateCamera();
 }
 
-void App_State_Playing::input(char s) {
+void App_State_Playing::input(std::string s) {
 
 	if (bPaused) {
 		return;
 	}
 
-
-	if (iCameraSelected == C_OVERVIEW)
-	{
-		if (s == 38 || s == 37 || s == 39 || s == 40 || s == 84 || s == 71) {
-			camera[iCameraSelected].Move(s);
-		}
+	if (s == keyboard.GetKeyBinding("MOVEMENT_ROBOT_FORWARD")){
+		theRobot->AnimationMove(1);
+		theRobot->Move(1);
+	}
+	else if (s == keyboard.GetKeyBinding("MOVEMENT_ROBOT_LEFT")) {
+		theRobot->rotate(4.0f);
+	}else if (s == keyboard.GetKeyBinding("MOVEMENT_ROBOT_RIGHT")) {
+		theRobot->rotate(-4.0f);
+	}else if (s == keyboard.GetKeyBinding("MOVEMENT_ROBOT_BACKWARD")) {
+		theRobot->Move(0);
+		theRobot->AnimationMove(0);
 	}
 
-
+	if (iCameraSelected == C_OVERVIEW){
+		if (s == keyboard.GetKeyBinding("MOVEMENT_CAMERA_FORWARD"))
+		{
+			camera[iCameraSelected].Move(C_FORWARD);
+		}else if (s == keyboard.GetKeyBinding("MOVEMENT_CAMERA_BACKWARD")){
+			camera[iCameraSelected].Move(C_BACKWARD);
+		}
+		else if (s == keyboard.GetKeyBinding("MOVEMENT_CAMERA_LEFT")) {
+			camera[iCameraSelected].Move(C_LEFT);
+		}
+		else if (s == keyboard.GetKeyBinding("MOVEMENT_CAMERA_RIGHT")) {
+			camera[iCameraSelected].Move(C_RIGHT);
+		}
+		else if (s == keyboard.GetKeyBinding("MOVEMENT_CAMERA_UP")) {
+			camera[iCameraSelected].Move(C_UP);
+		}
+		else if (s == keyboard.GetKeyBinding("MOVEMENT_CAMERA_DOWN")) {
+			camera[iCameraSelected].Move(C_DOWN);
+		}
+	}
+	
 	if (iCameraSelected == C_ROBOT_BEHIND) {
 		camera[iCameraSelected].Direction().set(theRobot->Direction());
 		camera[iCameraSelected].Position().set(
@@ -236,35 +299,6 @@ void App_State_Playing::input(char s) {
 			theRobot->Position().y() + (theRobot->Direction().y() * 10),
 			theRobot->Position().z() + (theRobot->Direction().z() * 10)
 		);
-	}
-
-	if (s != 87)
-	{
-		theRobot->AnimationMove(0);
-		//theRobot->Move(0);
-	}
-
-	switch (s)
-	{
-		// A
-	case 65:
-		theRobot->rotate(4.0f);
-		break;
-		// D
-	case 68:
-		theRobot->rotate(-4.0f);
-		break;
-		// W
-	case 87:
-		theRobot->AnimationMove(1);
-		theRobot->Move(1);
-		break;
-		// S
-	case 83:
-		theRobot->Move(0);
-		break;
-	default:
-		break;
 	}
 
 	UpdateCamera();

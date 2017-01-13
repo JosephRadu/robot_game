@@ -100,6 +100,7 @@
     <ClCompile Include="src\application.cpp" />
     <ClCompile Include="src\drawable.cpp" />
     <ClCompile Include="src\entity.cpp" />
+    <ClCompile Include="src\keyboard.cpp" />
     <ClCompile Include="src\manager_app_state.cpp" />
     <ClCompile Include="src\manager_json.cpp" />
     <ClCompile Include="src\obj_reader.cpp" />
@@ -115,6 +116,7 @@
     <ClInclude Include="include\drawable.h" />
     <ClInclude Include="include\entity.h" />
     <ClInclude Include="include\json.hpp" />
+    <ClInclude Include="include\keyboard.h" />
     <ClInclude Include="include\manager_app_state.h" />
     <ClInclude Include="include\manager_json.h" />
     <ClInclude Include="include\obj_reader.h" />

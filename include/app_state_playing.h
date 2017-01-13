@@ -14,6 +14,7 @@
 #include "obj_reader.h"
 
 #include "manager_json.h"
+#include "keyboard.h"
 
 enum _Camera { C_OVERVIEW = 0, C_ROBOT_BEHIND = 1, C_ROBOT_FRONT = 2 };
 
@@ -29,6 +30,7 @@ private:
 	Drawable *drawable;
 	Manager_JSON manager_json;
 	OBJ_Reader obj_reader;
+	Keyboard keyboard;
 
 	int iCameraSelected;
 
@@ -39,7 +41,7 @@ private:
 	// Bespoke Functions
 	void TogglePause();
 	void SwitchToCamera(int i);
-	void input(char s);
+	void input(std::string s);
 	Robot robot();
 	void UpdateCamera();
 
